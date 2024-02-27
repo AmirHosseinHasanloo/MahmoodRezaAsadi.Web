@@ -1,0 +1,59 @@
+﻿@model Core.DTOs.RegisterViewModel
+@{
+    ViewData["Title"] = "ثبت نام";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ثبت نام</li>
+        </ul>
+    </nav>
+</div>
+
+<main class="client-page">
+    <div class="container-content">
+
+        <header><h2> ثبت نام </h2></header>
+
+        <div class="form-layer">
+
+            <form asp-action="Register">
+
+                <div class="input-group">
+                    <span class="input-group-addon" id="username"><i class="zmdi zmdi-account"></i></span>
+                    <input asp-for="UserName" type="text" class="form-control" placeholder="نام و نام خانوادگی شما" aria-describedby="username">
+                </div>
+                <span class="text-warning" asp-validation-for="UserName"></span>
+
+                <div class="input-group">
+                    <span class="input-group-addon" id="email-address"><i class="zmdi zmdi-email"></i></span>
+                    <input asp-for="Email" type="text" class="form-control" placeholder="ایمیل برای مثال example@gmail.com" aria-describedby="email-address">
+                  
+                </div>
+                <span class="text-warning" asp-validation-for="Email"></span>
+
+
+                <div class="input-group">
+                    <span class="input-group-addon" id="password"><i class="zmdi zmdi-lock"></i></span>
+                    <input asp-for="Password" type="text" class="form-control" placeholder="رمز عبور " aria-describedby="password">
+                </div>
+                <span class="text-warning" asp-validation-for="Password"></span>
+
+                <div class="input-group">
+                    <span class="input-group-addon" id="password"><i class="zmdi zmdi-repeat"></i></span>
+                    <input asp-for="RePassword" type="text" class="form-control" placeholder="تکرار رمز عبور " aria-describedby="password">
+                </div>
+                <span class="text-warning" asp-validation-for="RePassword"></span>
+
+                <div class="link">
+                    <a href="/Login"> <i class="zmdi zmdi-account"></i> حسابی از قبل دارید؟ وارد شوید </a>
+                </div>
+
+                <button type="submit" class="btn btn-success"> ثبت نام </button>
+            </form>
+        </div>
+
+    </div>
+</main>

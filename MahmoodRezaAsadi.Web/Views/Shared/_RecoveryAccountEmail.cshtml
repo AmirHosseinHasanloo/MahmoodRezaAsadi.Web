@@ -1,0 +1,70 @@
+﻿@model DataLayer.Entities.User.User
+        
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+    <style>
+        /* Reset CSS */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        /* Container */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        /* Header */
+        .header {
+            text-align: center;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+        /* Content */
+        .content {
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            color: #888888;
+        }
+        /* Responsive Images */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body dir="rtl" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div class="container">
+        <div class="header">
+            <h1>ایمیل فعال سازی</h1>
+        </div>
+        <div class="content">
+            <p>عزیز "@Model.UserName"</p>
+            <p>برای بازیابی رمز عبور حساب خود روی دکمه زیر کلیک کنید</p>
+            <div style="text-align: center;">
+                <p>
+                    <a href="https://localhost:7216/Account/RecoveryPassword/@Model.ActiveCode" style="border-radius: 2px;background-color: dodgerblue; width: 20px; height:10x;  box-shadow: 0 5px 10px rgba(0,0,0,0.25);text-decoration: none ;color:white"> بازیابی رمز عبور</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer">
+            <p>&copy; محمود رضا اسدی </p>
+        </div>
+    </div>
+</body>
+</html>

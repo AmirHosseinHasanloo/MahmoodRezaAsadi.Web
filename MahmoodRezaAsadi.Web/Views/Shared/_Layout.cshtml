@@ -2,21 +2,16 @@
 <html class="no-js" dir="rtl" lang="fa-IR">
 <head>
     <meta charset="UTF-8">
-    <title> محمود رضا اسدی </title>
-    <meta name="googlebot" content="index,follow">
-    <meta name="robots" content="noodp,noydir">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap-rtl.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title> محمود رضا اسدی | @ViewData["Title"] </title>
+
+    <partial name="_MetaTags" />
+    <partial name="_Styles" /> 
+
     <script src="/js/jquery.min.js"></script>
 </head>
 <body>
     <script src="/js/modernizr-custom.js"></script>
+
 
     <div class="landing-layer">
         <div class="container">
@@ -25,40 +20,40 @@
                     <div class="col-sm-6 col-xs-12">
                         <ul>
                             <li>
-                                <a href=""> همکاری در فروش </a>
-                                <a href=""> درباره ما </a>
-                                <a href=""> تماس با ما </a>
+                                <a href=""> درباره من </a>
+                                <a href=""> تماس با من </a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-sm-6 col-xs-12">
                         <div class="clientarea">
-                            <div class="loggein ">
-                                <i class="zmdi zmdi-account"></i><a href=""> ایمان مدائنی ، خوش آمدی </a>
-                            </div>
-                            <div class="signin hidden">
-                                <i class="zmdi zmdi-account"></i>
-                                <a href=""> ورود </a> /
-                                <a href=""> عضویت </a>
-                            </div>
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <div class="loggein ">
+                                    <i class="zmdi zmdi-account"></i><a href=""> سلام ،@User.Identity.Name </a>/
+                                   <a href="/Logout"> خروج </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="signin">
+                                    <i class="zmdi zmdi-account"></i>
+                                    <a href="/Login"> ورود </a> /
+                                    <a href="/Register"> ثبت نام </a>
+                                </div>
+                            }
+
                         </div>
                     </div>
                 </div>
             </nav>
-            <header>
-                <a href="" class="logo"><img src="/images/logo.png"></a>
-                <h1> با اساتید مجرب و کارآزموده در خودآموز تاپ لرن </h1>
-                <h2> آموزش ببینید ، تجربه کسب کنید و بازار کار شوید </h2>
-                <h3> با کمترین هزینه خودت یاد بگیر </h3>
-            </header>
-            <div class="search-form">
-                <form>
-                    <input type="text" name="" placeholder="دنبال چه دوره ای هستی ؟">
-                    <button><i class="zmdi zmdi-search"></i></button>
-                </form>
-            </div>
+
+            @RenderSection("SearchBox", false)
         </div>
     </div>
+
+
 
     <!-- main manu -->
     <div class="main-menu">
@@ -104,147 +99,11 @@
     <!-- /main manu -->
     <!-- content -->
     <main id="home-page">
-        <div class="container">
-            <section class="terms-items">
-                <header>
-                    <h2> آخرین دوره های تاپ لرن </h2>
-                    <a href=""> مشاهده همه دوره ها </a>
-                </header>
-                <div class="row">
 
-                    <!-- Render Body-->
-                    @RenderBody()
-                    <!-- /Render Body-->
-
-                    <!-- col -->
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col">
-                        <article>
-                            <a href="" class="img-layer"><img src="/images/pic/1.jpg"></a>
-                            <h2><a href=""> آموزش متریال دیاین در زامارین </a></h2>
-                            <span> رایگان </span>
-                            <i>1:52:32</i>
-                        </article>
-                    </div>
-                    <!-- /col -->
-                    <!-- col -->
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col">
-                        <article>
-                            <a href="" class="img-layer"><img src="/images/pic/2.jpg"></a>
-                            <h2><a href=""> آموزش متریال دیاین در زامارین </a></h2>
-                            <span> رایگان </span>
-                            <i>1:52:32</i>
-                        </article>
-                    </div>
-                    <!-- /col -->
-                    <!-- col -->
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col">
-                        <article>
-                            <a href="" class="img-layer"><img src="/images/pic/3.jpg"></a>
-                            <h2><a href=""> آموزش متریال دیاین در زامارین </a></h2>
-                            <span> 150.000 تومان </span>
-                            <i>1:52:32</i>
-                        </article>
-                    </div>
-                    <!-- /col -->
-
-
-
-
-
-                </div>
-            </section>
-
-            <hr>
-
-            <section class="terms-items">
-                <header>
-                    <h2> دوره های محبوب تاپ لرن </h2>
-                    <a href=""> مشاهده همه دوره ها </a>
-                </header>
-                <div class="row">
-                    <!-- col -->
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col">
-                        <article>
-                            <a href="" class="img-layer"><img src="/images/pic/1.jpg"></a>
-                            <h2><a href=""> آموزش متریال دیاین در زامارین </a></h2>
-                            <span> رایگان </span>
-                            <i>1:52:32</i>
-                        </article>
-                    </div>
-                    <!-- /col -->
-                    <!-- col -->
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col">
-                        <article>
-                            <a href="" class="img-layer"><img src="/images/pic/2.jpg"></a>
-                            <h2><a href=""> آموزش متریال دیاین در زامارین </a></h2>
-                            <span> رایگان </span>
-                            <i>1:52:32</i>
-                        </article>
-                    </div>
-                    <!-- /col -->
-                    <!-- col -->
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col">
-                        <article>
-                            <a href="" class="img-layer"><img src="/images/pic/3.jpg"></a>
-                            <h2><a href=""> آموزش متریال دیاین در زامارین </a></h2>
-                            <span> 150.000 تومان </span>
-                            <i>1:52:32</i>
-                        </article>
-                    </div>
-                    <!-- /col -->
-                    <!-- col -->
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col">
-                        <article>
-                            <a href="" class="img-layer"><img src="/images/pic/4.jpg"></a>
-                            <h2><a href=""> آموزش متریال دیاین در زامارین </a></h2>
-                            <span> رایگان </span>
-                            <i>1:52:32</i>
-                        </article>
-                    </div>
-                    <!-- /col -->
-                    <!-- col -->
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col">
-                        <article>
-                            <a href="" class="img-layer"><img src="/images/pic/5.jpg"></a>
-                            <h2><a href=""> آموزش متریال دیاین در زامارین </a></h2>
-                            <span> 15.000 تومان </span>
-                            <i>1:52:32</i>
-                        </article>
-                    </div>
-                    <!-- /col -->
-                    <!-- col -->
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col">
-                        <article>
-                            <a href="" class="img-layer"><img src="/images/pic/6.jpg"></a>
-                            <h2><a href=""> آموزش متریال دیاین در زامارین </a></h2>
-                            <span> رایگان </span>
-                            <i>1:52:32</i>
-                        </article>
-                    </div>
-                    <!-- /col -->
-                    <!-- col -->
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col">
-                        <article>
-                            <a href="" class="img-layer"><img src="/images/pic/7.jpg"></a>
-                            <h2><a href=""> آموزش متریال دیاین در زامارین </a></h2>
-                            <span> 20.000 تومان </span>
-                            <i>1:52:32</i>
-                        </article>
-                    </div>
-                    <!-- /col -->
-                    <!-- col -->
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col">
-                        <article>
-                            <a href="" class="img-layer"><img src="/images/pic/8.jpg"></a>
-                            <h2><a href=""> آموزش متریال دیاین در زامارین </a></h2>
-                            <span> 75.000 تومان </span>
-                            <i>1:52:32</i>
-                        </article>
-                    </div>
-                    <!-- /col -->
-                </div>
-            </section>
-        </div>
+            <!-- Render Body-->
+            @RenderBody()
+            <!-- /Render Body-->
+     
     </main>
     <!-- /content -->
     <!-- footer -->
@@ -319,5 +178,6 @@
 
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/script.js"></script>
+    @RenderSection("Scripts",false)
 </body>
 </html>

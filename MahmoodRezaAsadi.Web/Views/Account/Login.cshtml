@@ -1,0 +1,76 @@
+﻿@model Core.DTOs.loginViewModel
+@{
+    ViewData["Title"] = "ورود";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ورود </li>
+        </ul>
+    </nav>
+</div>
+
+
+@if (ViewBag.IsRecovery != null)
+{
+    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+        <div class="alert alert-success text-center">
+            <p>
+               رمز عبور شما با موفقیت تغییر کرد
+            </p>
+        </div>
+    </div>
+}
+
+@if (ViewBag.IsSuccess != null)
+{
+    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+        <div class="alert alert-success text-center">
+            <p>
+                ورود شما با موفقیت انجام شد
+            </p>
+        </div>
+    </div>
+    <script src="/js/Login.js"></script>
+}
+
+
+<main class="client-page">
+    <div class="container-content">
+
+        <header><h2> ورود </h2></header>
+
+        <div class="form-layer">
+
+            <form asp-action="Login">
+
+                <div class="input-group">
+                    <span class="input-group-addon" id="email-address"><i class="zmdi zmdi-email"></i></span>
+                    <input asp-for="Email" type="text" class="form-control" placeholder="ایمیل" aria-describedby="email-address">
+                </div>
+                <span class="text-warning" asp-validation-for="Email"></span>
+
+                <div class="input-group">
+                    <span class="input-group-addon" id="password"><i class="zmdi zmdi-lock"></i></span>
+                    <input asp-for="Password" type="text" class="form-control" placeholder="رمز عبور " aria-describedby="password">
+                </div>
+                <span class="text-warning" asp-validation-for="Password"></span>
+                <div class="remember-me">
+                    <label><input asp-for="RememeberMe" type="checkbox" name="">  مرا بخاطر بسپار </label>
+                </div>
+
+                <div class="link">
+                    <a href="/ForgotPassword"> <i class="zmdi zmdi-lock"></i> رمز عبور خود را فراموش کرده ام !</a>
+                    <a href="/Register"> <i class="zmdi zmdi-account"></i>ثبت نام </a>
+                </div>
+
+                <button type="submit" class="btn btn-success"> ورود  </button>
+
+            </form>
+        </div>
+
+    </div>
+</main>
+

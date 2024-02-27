@@ -1,0 +1,25 @@
+﻿@model DataLayer.Entities.User.User
+
+@{
+    ViewData["Title"] = "SuccessRegister";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item active" aria-current="page">موفقیت آمیز</li>
+        </ul>
+    </nav>
+</div>
+
+
+<div class="col-md-12 col-xs-12 col-sm-12">
+    <div class="col-md-12 col-xs-12 col-sm-12 alert alert-success text-center">
+        <p>
+            کاربر گرامی '@Model.UserName' ثبت نام شما با موفقیت انجام شد و ایمیل فعالسازی حساب به '@Model.Email' ارسال گردید
+        </p>
+    </div>
+</div>
+<br />
+
