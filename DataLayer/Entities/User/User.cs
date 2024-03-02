@@ -29,6 +29,9 @@ namespace DataLayer.Entities.User
         [MaxLength(120, ErrorMessage = "فیلد {0} نمی تواند بیش از {1} کرکتر باشد")]
         public string Password { get; set; }
 
+        [Display(Name = "شماره تماس")]
+        public string? PhoneNumber { get; set; }
+
         [Display(Name = "کد فعالسازی")]
         [Required]
         public string ActiveCode { get; set; }

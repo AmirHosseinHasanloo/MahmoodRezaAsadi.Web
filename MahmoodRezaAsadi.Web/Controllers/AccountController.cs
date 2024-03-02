@@ -1,4 +1,4 @@
-﻿using Core.Convertors;
+﻿    using Core.Convertors;
 using Core.DTOs;
 using Core.Security;
 using Core.Services.Interfaces;
@@ -64,7 +64,7 @@ namespace MahmoodRezaAsadi.Web.Controllers
                 IsBanned = false,
                 Password = Bcrypt.HashPassword(model.Password, salt),
                 RoleId = 2,
-                UserAvatar = "noAvatar.png",
+                UserAvatar = "noImage.png",
             };
 
             _userService.AddUser(user);
@@ -84,11 +84,16 @@ namespace MahmoodRezaAsadi.Web.Controllers
         #region Login
 
         [Route("Login")]
-        public IActionResult Login(bool recoveryPassword = false)
+        public IActionResult Login(bool recoveryPassword = false,bool editAccount=false)
         {
             if (recoveryPassword != false)
             {
                 ViewBag.IsRecovery = true;
+            }
+
+            if (editAccount != false)
+            {
+                ViewBag.IsEditMode = true;
             }
             return View();
         }
@@ -105,11 +110,12 @@ namespace MahmoodRezaAsadi.Web.Controllers
             if (user != null)
             {
 
-                if (!_userService.VerifyPassword(user.Password, model.Password))
+                if(!_userService.VerifyPassword(user.Password, model.Password))
                 {
+
                     ModelState.AddModelError("Email"
-                        , errorMessage:
-                        "کاربر گرامی حسابی با این مشخصات وجود ندارد ");
+                       , errorMessage:
+                       "کاربر گرامی اطلاعات وارد شده صحیح نیست ");
                     return View(model);
                 }
 
@@ -143,12 +149,12 @@ namespace MahmoodRezaAsadi.Web.Controllers
                     return Redirect(returnUrl);
                 }
 
-                ViewBag.IsSuccess = true;
+                    ViewBag.IsSuccess = true;
+                return View(model);
             }
-
             ModelState.AddModelError("Email"
-                 , errorMessage:
-                 "کاربر گرامی حسابی با این مشخصات وجود ندارد ");
+                       , errorMessage:
+                       "کاربر گرامی اطلاعات وارد شده صحیح نیست ");
             return View(model);
         }
 

@@ -1,0 +1,92 @@
+﻿@model Core.DTOs.EditAccountViewModel
+@{
+    ViewData["Title"] = "EditAccount";
+}
+
+
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item active" aria-current="page"> ویرایش حساب </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="user-account">
+        <div class="row">
+            <partial name="/Views/Shared/_UserPanelSideBar.cshtml" />
+            <div class="col-md-9 col-sm-8 col-xs-12">
+                <section class="user-account-content">
+                    <header><h1> ویرایش حساب  </h1></header>
+                    <div class="inner form-layer">
+                        <form asp-action="EditAccount" enctype="multipart/form-data">
+
+                            <input type="hidden" asp-for="UserId"/>
+                            <input type="hidden" asp-for="ImageName"/>                            
+
+                            <div class="row">
+                                <div class="col-md-7 col-sm-8 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="username"><i class="zmdi zmdi-account"></i></span>
+                                        <input asp-for="UserName" type="text" class="form-control" placeholder="نام و نام خانوادگی" aria-describedby="username">
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="UserName"></span>
+                                </div>
+
+
+                                <div class="col-md-7 col-sm-8 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="phoneNumber"><i class="zmdi zmdi-phone"></i></span>
+                                        <input asp-for="PhoneNumber" type="text" class="form-control" placeholder="شماره تماس (اختیاری)" aria-describedby="username">
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+                                </div>
+                              
+
+                                <div class="col-md-7 col-sm-8 col-xs-12">
+                                    <label>عکس پروفایل</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="username"><i class="zmdi zmdi-account-box"></i></span>
+                                        <input asp-for="Profile" type="file" class="form-control">
+                                    </div>
+                                    <img class="img-responsive img-thumbnail FixedAccountImg" src="/UserAvatar/@Model.ImageName" />
+                                </div>
+                              
+                             
+
+
+                                <div class="col-md-7 col-sm-8 col-xs-12">
+                                    <div class="checkbox-layer">
+                                        <label><input asp-for="IAccept">  آیا از ویرایش حساب خود اطمینان دارید؟ </label>
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="IAccept"></span>
+                                </div>
+                         
+
+                                <div class="col-md-7 col-sm-8 col-xs-12">
+                                    <button type="submit" class="btn btn-warning"> ویرایش </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

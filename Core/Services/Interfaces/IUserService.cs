@@ -1,4 +1,6 @@
-﻿using DataLayer.Entities.User;
+﻿using Core.DTOs;
+using DataLayer.Entities.User;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using System;
 using System.Collections.Generic;
@@ -10,13 +12,31 @@ namespace Core.Services.Interfaces
 {
     public interface IUserService
     {
-        bool CheckUserNameIsExists(string userName);
-        bool IsExistEmail(string email);
-        void AddUser(User user);
-        bool ActiveAccount(string activeCode);
-        bool VerifyPassword(string savedPasword, string password);
+
+        #region Get
         User GetUserByEmail(string email);
-        User GetUserByActiveCode(string  activeCode);
+        User GetUserByActiveCode(string activeCode);
+        User GetUserByUserName(string userName);
+        SideBarViewModel GetUserSideBarInfo(string userName);
+        DashboardInfoViewModel GetUserInfoForDashboard(string userName);
+        EditAccountViewModel GetUserForEditAccount(string userName);
+
+        #endregion
+
+        #region Check
+        bool CheckUserNameIsExists(string userName);
+        bool VerifyPassword(string savedPasword, string password);
+        bool IsExistEmail(string email);
+        bool ActiveAccount(string activeCode);
+        #endregion
+
+        #region CRUD
+        void AddUser(User user);
         void UpdateUser(User user);
+        void UpdateUserInUserPanel(EditAccountViewModel model);
+        #endregion
+
+
+
     }
 }

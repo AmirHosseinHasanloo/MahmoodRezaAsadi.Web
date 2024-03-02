@@ -1,8 +1,10 @@
 ﻿using BCrypt.Net;
+using Core.DTOs;
 using Core.Security;
 using Core.Services.Interfaces;
 using DataLayer.Context;
 using DataLayer.Entities.User;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,5 +88,95 @@ namespace Core.Services
             _context.Update(user);
             _context.SaveChanges();
         }
+
+        public SideBarViewModel GetUserSideBarInfo(string userName)
+        {
+            return _context.Users.Where(u => u.UserName == userName).Select(u => new SideBarViewModel()
+            {
+                RegisterDate = u.CreateDate,
+                UserAvatar = u.UserAvatar,
+                UserName = u.UserName,
+            }).Single();
+        }
+
+        public DashboardInfoViewModel GetUserInfoForDashboard(string userName)
+        {
+            var user = _context.Users.Single(u => u.UserName == userName);
+
+            DashboardInfoViewModel viewModel = new DashboardInfoViewModel
+            {
+                UserName = user.UserName,
+                CreateDate = user.CreateDate,
+                Email = user.Email,
+                IsActive = user.IsActive == true ? "فعال" : "غیرفعال",
+            };
+
+            return viewModel;
+        }
+
+        public User GetUserByUserName(string userName)
+        {
+            return _context.Users.Single(u => u.UserName == userName);
+        }
+
+        public EditAccountViewModel GetUserForEditAccount(string userName)
+        {
+            User user = _context.Users.Single(u => u.UserName == userName);
+
+            EditAccountViewModel viewModel = new EditAccountViewModel()
+            {
+                UserId = user.UserId,
+                ImageName = user.UserAvatar,
+                UserName = user.UserName,
+                IAccept = false,
+            };
+
+            return viewModel;
+        }
+
+        public void UpdateUserInUserPanel(EditAccountViewModel model)
+        {
+
+            var user = _context.Users.Single(u => u.UserId == model.UserId);
+
+            if (user != null)
+            {
+                if (model.Profile != null)
+                {
+                    string avatarPath = Path.Combine(Directory.GetCurrentDirectory()
+                  , "wwwroot/UserAvatar/");
+
+                    string currentAvatar = avatarPath + model.ImageName;
+
+                    if (user.UserAvatar != "noImage.png" && Path.Exists(currentAvatar))
+                    {
+                        System.IO.File.Delete(currentAvatar);
+                    }
+                    string newProfileName = model.ImageName = NameGenerator.GenerateName() + Path.GetExtension(model.Profile.FileName);
+
+                    string newAvatar = avatarPath + newProfileName;
+
+                    using (var stream = new FileStream(newAvatar, FileMode.Create))
+                    {
+                        model.Profile.CopyTo(stream);
+                    }
+
+                    user.UserAvatar = newProfileName;
+                }
+                if (model.PhoneNumber != null)
+                {
+                    user.PhoneNumber = model.PhoneNumber;
+                }
+                user.UserName = model.UserName;
+
+
+                _context.Users.Update(user);
+                _context.SaveChanges();
+            }
+        }
+
+
+
+
     }
 }

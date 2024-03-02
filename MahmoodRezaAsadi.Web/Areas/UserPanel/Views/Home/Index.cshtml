@@ -1,0 +1,39 @@
+﻿@using Core.Convertors
+@model Core.DTOs.DashboardInfoViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">صفحه اصلی</a></li>
+            <li class="breadcrumb-item active" aria-current="page"> پنل کاربر </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="user-account">
+        <div class="row">
+            <partial name="/Views/Shared/_UserPanelSideBar.cshtml" />
+            <div class="col-md-9 col-sm-8 col-xs-12">
+                <section class="user-account-content">
+                    <header><h1> اطلاعات کاربر </h1></header>
+                    <div class="inner">
+                        <div class="account-information">
+                            <h3> اطلاعات کاربری </h3>
+                            <ul>
+                                <li> <i class="zmdi zmdi-account"></i> نام و نام خانوادگی : @Model.UserName </li>
+                                <li> <i class="zmdi zmdi-email"></i> ایمیل : @Model.Email </li>
+                                <li> <i class="zmdi zmdi-info"></i> وضعیت حساب : @Model.IsActive </li>
+                                <li> <i class="zmdi zmdi-calendar-check"></i> تاریخ عضویت : @Model.CreateDate.ToShamsi() </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
