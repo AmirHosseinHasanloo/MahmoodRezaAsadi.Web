@@ -12,6 +12,19 @@ namespace DataLayer.Context
     {
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options) { }
 
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Only Show UnBanned Users
+            modelBuilder.Entity<User>().HasQueryFilter(u => !u.IsBanned);
+
+
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+
+
         #region User
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }

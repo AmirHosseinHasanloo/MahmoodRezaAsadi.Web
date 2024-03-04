@@ -25,6 +25,7 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
 #region IOC 
 
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IUserAdminService, UserAdminService>();
 builder.Services.AddTransient<IViewRenderService, RenderViewToString>();
 #endregion
 

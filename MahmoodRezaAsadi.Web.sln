@@ -5,9 +5,9 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MahmoodRezaAsadi.Web", "MahmoodRezaAsadi.Web\MahmoodRezaAsadi.Web.csproj", "{7B6EAF4D-A450-464A-8BCC-1DD8B37579BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{4C333C39-8593-46BA-9CC2-ADBA2F769464}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer\DataLayer.csproj", "{4C333C39-8593-46BA-9CC2-ADBA2F769464}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{212728F0-C7EF-4208-A9ED-5071D329DB94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{212728F0-C7EF-4208-A9ED-5071D329DB94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
