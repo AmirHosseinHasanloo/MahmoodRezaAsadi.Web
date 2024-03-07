@@ -1,4 +1,5 @@
-﻿using DataLayer.Entities.User;
+﻿using DataLayer.Entities.Course;
+using DataLayer.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,10 @@ namespace DataLayer.Context
         public DbSet<Role> Roles { get; set; }
         #endregion
 
+        #region Course
+        public DbSet<CourseGroup> CourseGroups { get; set; }
+
+        #endregion
 
     }
 }
