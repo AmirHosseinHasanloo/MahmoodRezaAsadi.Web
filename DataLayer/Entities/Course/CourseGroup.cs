@@ -21,12 +21,16 @@ namespace DataLayer.Entities.Course
         [Display(Name = "زیر گروه")]
         public int? ParentId { get; set; }
 
-
-        #region Relations
-
+        // navigation properties
         [ForeignKey("ParentId")]
         public ICollection<CourseGroup>? CourseGroups { get; set; }
 
-        #endregion
+        [InverseProperty("CourseGroup")]
+        public ICollection<Course>? Courses { get; set; }
+
+        [InverseProperty("SubGroup")]
+        public ICollection<Course>? SubGroup { get; set; }
+
+
     }
 }

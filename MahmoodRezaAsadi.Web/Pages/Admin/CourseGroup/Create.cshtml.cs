@@ -31,6 +31,11 @@ namespace MahmoodRezaAsadi.Web.Pages.Admin.CourseGroup
 
         public IActionResult OnPost()
         {
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
             //Add Group
             _courseService.AddGroup(CourseGroup);
 

@@ -1,0 +1,29 @@
+﻿@page "{id}"
+@model MahmoodRezaAsadi.Web.Pages.Admin.Course.DeleteModel
+@{
+    ViewData["Title"] = "حذف دوره";
+}
+
+
+<div class="clearfix">
+    <br />
+    <br />
+</div>
+
+<div class="container alert alert-info text-center col-md-12 col-sm-12">
+
+    <form method="post">
+        <input type="hidden" asp-for="Delete.CourseId" />
+
+        <p>
+            آیا از حذف دوره "@Model.Delete.Title" مطمئن هستید ؟
+        </p>
+
+        <p>
+            <input type="submit" class="btn btn-outline btn-danger" value="حذف دوره" />
+            <a class="btn btn-outline btn-default" asp-page="Index">انصراف</a>
+        </p>
+    </form>
+
+</div>
+

@@ -4,6 +4,7 @@ using DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240310123030_UPDATE_NOW")]
+    partial class UPDATENOW
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,11 +37,18 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CourseGroupGroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CourseImageName")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("CoursePrice")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseStatusStatusId")
                         .HasColumnType("int");
 
                     b.Property<string>("CourseTitle")
@@ -50,6 +60,7 @@ namespace DataLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DemoFileName")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -72,6 +83,9 @@ namespace DataLayer.Migrations
                         .HasMaxLength(600)
                         .HasColumnType("nvarchar(600)");
 
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
@@ -80,9 +94,9 @@ namespace DataLayer.Migrations
 
                     b.HasKey("CourseId");
 
-                    b.HasIndex("GroupId");
+                    b.HasIndex("CourseGroupGroupId");
 
-                    b.HasIndex("StatusId");
+                    b.HasIndex("CourseStatusStatusId");
 
                     b.HasIndex("SubGroupId");
 
@@ -211,13 +225,13 @@ namespace DataLayer.Migrations
                 {
                     b.HasOne("DataLayer.Entities.Course.CourseGroup", "CourseGroup")
                         .WithMany("Courses")
-                        .HasForeignKey("GroupId")
+                        .HasForeignKey("CourseGroupGroupId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DataLayer.Entities.Course.CourseStatus", "CourseStatus")
                         .WithMany("Courses")
-                        .HasForeignKey("StatusId")
+                        .HasForeignKey("CourseStatusStatusId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

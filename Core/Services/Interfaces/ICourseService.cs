@@ -1,4 +1,7 @@
-﻿using DataLayer.Entities.Course;
+﻿using Core.DTOs;
+using DataLayer.Entities.Course;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +19,35 @@ namespace Core.Services.Interfaces
         void DeleteCourseGroupById(int id);
         void AddGroup(CourseGroup courseGroup);
         void EditGroup(CourseGroup courseGroup);
+        #endregion
+
+
+        #region Working with files
+        string SaveFile(IFormFile formFile, string path, string subPath, string? episodeName);
+        void SaveThumbnailFile(string imagePath, string fileName);
+        string GenerateFileNameWithFilePath(IFormFile file);
+
+        #endregion
+
+
+        #region Course
+
+        #region Get
+        Course GetCourseById(int id);
+        DeleteCourseAdminViewModel GetCourseForDeleteInAdminPanel(int courseId);
+        void DeleteCourseById(int courseId);
+        List<SelectListItem> GetCourseGroupsForAdminPanel();
+        List<SelectListItem> GetSubGroupsForAdminPanel(int groupId);
+        List<SelectListItem> GetAllCourseStatuses();
+        CourseListForAdminPanelViewModel GetAllCourseForAdminPanel(int pageId = 1, string filterName = "");
+        #endregion
+
+
+        #region Create & edit
+        void AddCourse(Course course, IFormFile courseImage, IFormFile courseDemo);
+        void UpdateCourse(Course course, IFormFile courseImage, IFormFile courseDemo);
+        #endregion
+
         #endregion
     }
 }

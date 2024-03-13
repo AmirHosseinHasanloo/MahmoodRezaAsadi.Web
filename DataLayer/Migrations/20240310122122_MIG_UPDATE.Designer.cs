@@ -4,6 +4,7 @@ using DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240310122122_MIG_UPDATE")]
+    partial class MIGUPDATE
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,11 +37,18 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CourseGroupGroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CourseImageName")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("CoursePrice")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseStatusStatusId")
                         .HasColumnType("int");
 
                     b.Property<string>("CourseTitle")
@@ -50,6 +60,7 @@ namespace DataLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DemoFileName")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -72,6 +83,9 @@ namespace DataLayer.Migrations
                         .HasMaxLength(600)
                         .HasColumnType("nvarchar(600)");
 
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
@@ -80,9 +94,9 @@ namespace DataLayer.Migrations
 
                     b.HasKey("CourseId");
 
-                    b.HasIndex("GroupId");
+                    b.HasIndex("CourseGroupGroupId");
 
-                    b.HasIndex("StatusId");
+                    b.HasIndex("CourseStatusStatusId");
 
                     b.HasIndex("SubGroupId");
 
@@ -99,6 +113,9 @@ namespace DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupId"));
 
+                    b.Property<int?>("CourseGroupGroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("GroupTitle")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -109,7 +126,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("GroupId");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("CourseGroupGroupId");
 
                     b.ToTable("CourseGroups");
                 });
@@ -210,19 +227,19 @@ namespace DataLayer.Migrations
             modelBuilder.Entity("DataLayer.Entities.Course.Course", b =>
                 {
                     b.HasOne("DataLayer.Entities.Course.CourseGroup", "CourseGroup")
-                        .WithMany("Courses")
-                        .HasForeignKey("GroupId")
+                        .WithMany()
+                        .HasForeignKey("CourseGroupGroupId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DataLayer.Entities.Course.CourseStatus", "CourseStatus")
                         .WithMany("Courses")
-                        .HasForeignKey("StatusId")
+                        .HasForeignKey("CourseStatusStatusId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DataLayer.Entities.Course.CourseGroup", "SubGroup")
-                        .WithMany("SubGroup")
+                        .WithMany()
                         .HasForeignKey("SubGroupId");
 
                     b.HasOne("DataLayer.Entities.User.User", "User")
@@ -244,7 +261,7 @@ namespace DataLayer.Migrations
                 {
                     b.HasOne("DataLayer.Entities.Course.CourseGroup", null)
                         .WithMany("CourseGroups")
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("CourseGroupGroupId");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.User.User", b =>
@@ -261,10 +278,6 @@ namespace DataLayer.Migrations
             modelBuilder.Entity("DataLayer.Entities.Course.CourseGroup", b =>
                 {
                     b.Navigation("CourseGroups");
-
-                    b.Navigation("Courses");
-
-                    b.Navigation("SubGroup");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Course.CourseStatus", b =>

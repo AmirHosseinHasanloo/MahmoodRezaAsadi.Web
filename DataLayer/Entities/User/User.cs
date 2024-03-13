@@ -9,6 +9,11 @@ namespace DataLayer.Entities.User
 {
     public class User
     {
+        public User()
+        {
+            
+        }
+
         [Key]
         public int UserId { get; set; }
 
@@ -53,6 +58,7 @@ namespace DataLayer.Entities.User
 
 
         #region Relations
+        public ICollection<Course.Course> Courses { get; set; }
         public Role Role { get; set; }
         #endregion
     }

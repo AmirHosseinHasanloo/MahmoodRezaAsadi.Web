@@ -20,6 +20,15 @@ namespace DataLayer.Context
             modelBuilder.Entity<User>().HasQueryFilter(u => !u.IsBanned);
 
 
+            // disable cascade delete =>
+            var cascadeFKs = modelBuilder.Model.GetEntityTypes()
+     .SelectMany(t => t.GetForeignKeys())
+     .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+
+            foreach (var fk in cascadeFKs)
+            {
+                fk.DeleteBehavior = DeleteBehavior.Restrict;
+            }
 
             base.OnModelCreating(modelBuilder);
         }
@@ -33,6 +42,8 @@ namespace DataLayer.Context
 
         #region Course
         public DbSet<CourseGroup> CourseGroups { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseStatus> CourseStatuses { get; set; }
 
         #endregion
 

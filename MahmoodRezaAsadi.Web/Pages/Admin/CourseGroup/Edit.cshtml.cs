@@ -27,16 +27,6 @@ namespace MahmoodRezaAsadi.Web.Pages.Admin.CourseGroup
 
             if (!ModelState.IsValid)
             {
-                foreach (var modelStateKey in ModelState.Keys)
-                {
-                    var modelStateVal = ModelState[modelStateKey];
-                    foreach (var error in modelStateVal.Errors)
-                    {
-                        // نمایش هر خطا
-                        var errorMessage = error.ErrorMessage;
-                        // یا استفاده از error.Exception
-                    }
-                }
                 return Page();
             }
 
