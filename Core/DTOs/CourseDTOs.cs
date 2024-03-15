@@ -29,4 +29,13 @@ namespace Core.DTOs
         public required int CourseId { get; set; }
         public required string Title { get; set; }
     }
+
+    public class CourseCardViewModel
+    {
+        public int CourseId { get; set; }
+        public string CourseTitle { get; set; }
+        public string ImageName { get; set; }
+        public int Price { get; set; }
+        public TimeSpan TotalTime { get; set; }
+    }
 }

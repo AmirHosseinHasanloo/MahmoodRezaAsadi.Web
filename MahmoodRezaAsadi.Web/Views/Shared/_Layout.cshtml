@@ -53,12 +53,8 @@
         </div>
     </div>
 
-
-
     <!-- main manu -->
-    <cache expires-after="@TimeSpan.FromHours(8)">
-        @await Component.InvokeAsync("CourseGroupComponent")
-    </cache>
+    @await Component.InvokeAsync("CourseGroupComponent")
     <!-- /main manu -->
     <!-- content -->
     <main id="home-page">

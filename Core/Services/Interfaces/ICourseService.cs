@@ -34,6 +34,9 @@ namespace Core.Services.Interfaces
 
         #region Get
         Course GetCourseById(int id);
+        Course GetCourseByIdForClientSide(int id);
+        Tuple<List<CourseCardViewModel>, int> ShowCourse(int pageId = 1, string filter = "", string getType = "all"
+           , string orderByType = "date", int startPrice = 0, int endPrice = 0, List<int> selectedGroups = null, int take = 0);
         DeleteCourseAdminViewModel GetCourseForDeleteInAdminPanel(int courseId);
         void DeleteCourseById(int courseId);
         List<SelectListItem> GetCourseGroupsForAdminPanel();

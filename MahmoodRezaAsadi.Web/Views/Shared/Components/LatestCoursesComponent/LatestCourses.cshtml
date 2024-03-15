@@ -1,0 +1,6 @@
+﻿@model Tuple<List<Core.DTOs.CourseCardViewModel>,int>
+
+@foreach (var item in Model.Item1)
+{
+    <partial name="_CourseBox" model="item" />
+}

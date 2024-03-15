@@ -51,7 +51,7 @@ namespace Core.Services
         public void DeleteCourseById(int courseId)
         {
             var course = _context.Courses.Find(courseId);
-            
+
             string imagePath = Path.Combine(Directory.GetCurrentDirectory()
                    , "wwwroot/CourseRoot/Images", course.CourseImageName);
 
@@ -154,6 +154,13 @@ namespace Core.Services
             return _context.Courses.Find(id);
         }
 
+        public Course GetCourseByIdForClientSide(int id)
+        {
+            return _context.Courses.Include(c => c.User).Include(c => c.CourseStatus)
+                .Include(c=>c.CourseGroup).
+                Single(c => c.CourseId == id);
+        }
+
         public DeleteCourseAdminViewModel GetCourseForDeleteInAdminPanel(int courseId)
         {
             return _context.Courses.Where(c => c.CourseId == courseId)
@@ -239,6 +246,123 @@ namespace Core.Services
                 "CourseRoot/ThumbImages", fileName);
 
             imgResizer.Image_resize(imagePath, thumbPath, 400);
+        }
+
+        public Tuple<List<CourseCardViewModel>, int> ShowCourse(int pageId = 1, string filter = "", string getType = "all"
+            , string orderByType = "date", int startPrice = 0, int endPrice = 0, List<int> selectedGroups = null, int take = 0)
+        {
+            if (take == 0)
+            {
+                take = 9;
+            }
+
+
+            IQueryable<Course> result = _context.Courses;
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                result = result.Where(c => c.CourseTitle.Contains(filter) || c.Tags.Contains(filter));
+            }
+
+            switch (getType)
+            {
+                case "all":
+                    {
+                        break;
+                    }
+
+                case "priceLess":
+                    {
+                        result = result.Where(c => c.CoursePrice == 0);
+                        break;
+                    }
+
+                case "havePrice":
+                    {
+                        result = result.Where(c => c.CoursePrice != 0);
+                        break;
+                    }
+
+                default:
+                    break;
+            }
+
+
+            switch (orderByType)
+            {
+                case "date":
+                    {
+                        result = result.OrderBy(c => c.CreateDate);
+                        break;
+                    }
+
+                case "updateDate":
+                    {
+                        result = result.OrderBy(c => c.UpdateDate);
+                        break;
+                    }
+
+                default:
+                    break;
+            }
+
+            if (startPrice > 0)
+            {
+                result = result.Where(c => c.CoursePrice > startPrice);
+            }
+
+            if (endPrice > 0)
+            {
+                result = result.Where(c => c.CoursePrice < endPrice);
+            }
+
+            if (selectedGroups != null && selectedGroups.Any())
+            {
+                foreach (var groupId in selectedGroups)
+                {
+                    result = result.Where(c => c.GroupId == groupId || c.SubGroupId == groupId);
+                }
+            }
+
+            int skip = (pageId - 1) * take;
+
+            //int pageCount = result.Include(c => c.CourseEpisodes)
+            // .AsNoTracking().AsEnumerable()
+            // .Select(c => new ShowCourseListItemViewModel()
+            // {
+            //     CourseId = c.CourseId,
+            //     CourseTitle = c.CourseTitle,
+            //     ImageName = c.CourseImageName,
+            //     Price = c.CoursePrice,
+            //     TotalTime = new TimeSpan((c.CourseEpisodes.Sum(e => e.EpisodeTime.Ticks) == 0)
+            //     ? 0 : c.CourseEpisodes.Sum(e => e.EpisodeTime.Ticks))
+            // }).Count() / take;
+
+
+            int pageCount = result.AsNoTracking().AsEnumerable()
+                .Select(c => new CourseCardViewModel()
+                {
+                    CourseId = c.CourseId,
+                    CourseTitle = c.CourseTitle,
+                    ImageName = c.CourseImageName,
+                    Price = c.CoursePrice,
+                    // Add Episode Time
+                    TotalTime = new TimeSpan(0)
+                }).Count() / take;
+
+
+            var query = result.AsNoTracking().AsEnumerable()
+                .Select(c => new CourseCardViewModel()
+                {
+                    CourseId = c.CourseId,
+                    CourseTitle = c.CourseTitle,
+                    ImageName = c.CourseImageName,
+                    Price = c.CoursePrice,
+                    // Add Episode Time
+                    TotalTime = new TimeSpan(0)
+                }).Skip(skip).Take(take).ToList();
+
+            return Tuple.Create(query, pageCount);
         }
 
         public void UpdateCourse(Course course, IFormFile courseImage, IFormFile courseDemo)
