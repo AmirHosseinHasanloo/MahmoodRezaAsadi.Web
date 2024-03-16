@@ -64,7 +64,7 @@ namespace DataLayer.Entities.Course
         // navigation properties
 
         [ForeignKey("UserId")]
-        public User.User ?User { get; set; }
+        public User.User? User { get; set; }
 
         [ForeignKey("GroupId")]
         public CourseGroup? CourseGroup { get; set; }
@@ -74,5 +74,7 @@ namespace DataLayer.Entities.Course
 
         [ForeignKey("StatusId")]
         public CourseStatus? CourseStatus { get; set; }
+
+        public ICollection<CourseEpisode>? CourseEpisodes { get; set; }
     }
 }

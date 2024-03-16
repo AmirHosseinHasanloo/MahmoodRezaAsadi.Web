@@ -1,0 +1,32 @@
+﻿@page "{id}"
+@model MahmoodRezaAsadi.Web.Pages.Admin.CourseEpisode.DeleteModel
+@{
+    ViewData["Title"] = "حذف بخش";
+}
+<div class="clearfix">
+    <br />
+</div>
+
+<div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            حذف بخش
+        </div>
+        <div class="panel-body">
+            <form method="post">
+                <input type="hidden" asp-for="DeleteDTO.EpisodeId" />
+                <dl class="dl-horizontal">
+                    <dt>نام بخش</dt>
+                    <dd>@Model.DeleteDTO.EpisodeTitle</dd>
+                    <br />
+                    <dd>
+                        <input type="submit" class="btn btn-danger" value="حذف" />
+                    </dd>
+                    <br />
+                </dl>
+            </form>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>

@@ -38,4 +38,11 @@ namespace Core.DTOs
         public int Price { get; set; }
         public TimeSpan TotalTime { get; set; }
     }
+
+    public class DeleteEpisodeViewModel
+    {
+        public int EpisodeId { get; set; }
+        public int CourseId { get; set; }
+        public string EpisodeTitle { get; set; }
+    }
 }

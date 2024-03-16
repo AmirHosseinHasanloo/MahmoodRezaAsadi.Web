@@ -5,9 +5,11 @@ using Core.Services.Interfaces;
 using DataLayer.Context;
 using DataLayer.Entities.Course;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters.Internal;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +41,15 @@ namespace Core.Services
             }
 
             _context.Add(course);
+            _context.SaveChanges();
+        }
+
+        public void AddEpisode(IFormFile video, CourseEpisode episode)
+        {
+            episode.episodeFileName = video.FileName;
+            SaveFile(video, "CourseRoot", "CourseEpisodes", video.FileName);
+
+            _context.Add(episode);
             _context.SaveChanges();
         }
 
@@ -95,6 +106,22 @@ namespace Core.Services
             _context.SaveChanges();
         }
 
+        public void DeleteEpisodeById(int episodeId)
+        {
+            var episode = _context.CourseEpisodes.Find(episodeId);
+
+            string episodePath = Path.Combine(Directory.GetCurrentDirectory()
+                     , "wwwroot/CourseRoot/CourseEpisodes/" + episode.episodeFileName);
+
+            if (File.Exists(episodePath))
+            {
+                File.Delete(episodePath);
+            }
+
+            _context.Remove(episode);
+            _context.SaveChanges();
+        }
+
         public void EditGroup(CourseGroup courseGroup)
         {
             _context.CourseGroups.Update(courseGroup);
@@ -108,9 +135,8 @@ namespace Core.Services
 
         public CourseListForAdminPanelViewModel GetAllCourseForAdminPanel(int pageId = 1, string filterName = "")
         {
-            IQueryable<Course> result = _context.Courses;
+            IQueryable<Course> result = _context.Courses.Include(c => c.CourseEpisodes);
 
-            //TODO : Add Episode and show count of them
             CourseListForAdminPanelViewModel viewModel = new CourseListForAdminPanelViewModel();
 
 
@@ -133,7 +159,7 @@ namespace Core.Services
                     CourseId = c.CourseId,
                     CourseName = c.CourseTitle,
                     ImageName = c.CourseImageName,
-                    EposodeCount = 0
+                    EposodeCount = c.CourseEpisodes.Count(),
                 }).ToList();
 
 
@@ -157,8 +183,19 @@ namespace Core.Services
         public Course GetCourseByIdForClientSide(int id)
         {
             return _context.Courses.Include(c => c.User).Include(c => c.CourseStatus)
-                .Include(c=>c.CourseGroup).
+                .Include(c => c.CourseGroup).
                 Single(c => c.CourseId == id);
+        }
+
+        public DeleteEpisodeViewModel GetCourseEpisodeForDelete(int episodeId)
+        {
+            return _context.CourseEpisodes.Where(e => e.EpisodeId == episodeId)
+                .Select(e => new DeleteEpisodeViewModel()
+                {
+                    CourseId = Convert.ToInt32(e.CourseId),
+                    EpisodeId = e.EpisodeId,
+                    EpisodeTitle = e.EpisodeTitle
+                }).Single();
         }
 
         public DeleteCourseAdminViewModel GetCourseForDeleteInAdminPanel(int courseId)
@@ -191,6 +228,30 @@ namespace Core.Services
                  }).ToList();
         }
 
+        public CourseEpisode GetEpisodeByEpisodeId(int episodeId)
+        {
+            return _context.CourseEpisodes.Find(episodeId);
+        }
+
+        public Tuple<List<CourseEpisode>, int> GetEpisodesByCourseId(int courseId, int pageId = 1, string filter = "")
+        {
+            IQueryable<CourseEpisode> result = _context.CourseEpisodes
+                .Where(ep => ep.CourseId == courseId);
+
+            int take = 10;
+            int skip = (pageId - 1) * take;
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                result = result.Where(ep => ep.EpisodeTitle.Contains(filter));
+            }
+
+            int pageCount = result.Count() / take;
+
+
+            return Tuple.Create(result.Skip(skip).Take(take).ToList(), pageCount);
+        }
+
         public List<SelectListItem> GetSubGroupsForAdminPanel(int groupId)
         {
             return _context.CourseGroups.Where(g => g.ParentId == groupId)
@@ -201,6 +262,11 @@ namespace Core.Services
                   }).ToList();
         }
 
+        public bool IsEpisodeExists(string episodeName)
+        {
+            return _context.CourseEpisodes.Any(c => c.episodeFileName == episodeName);
+        }
+
         public string SaveFile(IFormFile formFile, string path, string subPath, string? episodeName = "")
         {
             string fileName = GenerateFileNameWithFilePath(formFile);
@@ -208,7 +274,7 @@ namespace Core.Services
             string filePath = Path.Combine(Directory.GetCurrentDirectory(),
                 "wwwroot" + "/" + path + "/" + subPath, fileName);
 
-            if (subPath == "CourseEpisodes")
+            if (subPath == "CourseEpisodes" && episodeName != "")
             {
                 // episodes dont need rename !
                 string episodePath = Path.Combine(Directory.GetCurrentDirectory(),
@@ -257,7 +323,7 @@ namespace Core.Services
             }
 
 
-            IQueryable<Course> result = _context.Courses;
+            IQueryable<Course> result = _context.Courses.Include(c => c.CourseEpisodes);
 
             if (!string.IsNullOrEmpty(filter))
             {
@@ -326,17 +392,7 @@ namespace Core.Services
 
             int skip = (pageId - 1) * take;
 
-            //int pageCount = result.Include(c => c.CourseEpisodes)
-            // .AsNoTracking().AsEnumerable()
-            // .Select(c => new ShowCourseListItemViewModel()
-            // {
-            //     CourseId = c.CourseId,
-            //     CourseTitle = c.CourseTitle,
-            //     ImageName = c.CourseImageName,
-            //     Price = c.CoursePrice,
-            //     TotalTime = new TimeSpan((c.CourseEpisodes.Sum(e => e.EpisodeTime.Ticks) == 0)
-            //     ? 0 : c.CourseEpisodes.Sum(e => e.EpisodeTime.Ticks))
-            // }).Count() / take;
+
 
 
             int pageCount = result.AsNoTracking().AsEnumerable()
@@ -346,8 +402,8 @@ namespace Core.Services
                     CourseTitle = c.CourseTitle,
                     ImageName = c.CourseImageName,
                     Price = c.CoursePrice,
-                    // Add Episode Time
-                    TotalTime = new TimeSpan(0)
+                    TotalTime = new TimeSpan((c.CourseEpisodes.Sum(e => e.EpisodeTime.Ticks) == 0)
+                    ? 0 : c.CourseEpisodes.Sum(e => e.EpisodeTime.Ticks))
                 }).Count() / take;
 
 
@@ -358,8 +414,8 @@ namespace Core.Services
                     CourseTitle = c.CourseTitle,
                     ImageName = c.CourseImageName,
                     Price = c.CoursePrice,
-                    // Add Episode Time
-                    TotalTime = new TimeSpan(0)
+                    TotalTime = new TimeSpan((c.CourseEpisodes.Sum(e => e.EpisodeTime.Ticks) == 0)
+                    ? 0 : c.CourseEpisodes.Sum(e => e.EpisodeTime.Ticks))
                 }).Skip(skip).Take(take).ToList();
 
             return Tuple.Create(query, pageCount);
@@ -410,6 +466,27 @@ namespace Core.Services
             }
 
             _context.Courses.Update(course);
+            _context.SaveChanges();
+        }
+
+        public void UpdateEpisode(IFormFile video, CourseEpisode episode)
+        {
+
+            if (video != null)
+            {
+                string episodePath = Path.Combine(Directory.GetCurrentDirectory()
+                    , "wwwroot/CourseRoot/CourseEpisodes/" + episode.episodeFileName);
+
+                if (File.Exists(episodePath))
+                {
+                    File.Delete(episodePath);
+                }
+
+                episode.episodeFileName = video.FileName;
+                SaveFile(video, "CourseRoot", "CourseEpisodes", video.FileName);
+            }
+
+            _context.Update(episode);
             _context.SaveChanges();
         }
     }

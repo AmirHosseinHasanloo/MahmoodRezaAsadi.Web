@@ -53,16 +53,16 @@
                                 {
                                     <tr>
                                         <td class="text-center">@course.CourseName</td>
-                                        <td class="text-center">
+                                        <td class="text-center" style="max-height:180px;max-width:250px;">
                                             <img src="/CourseRoot/Images/@course.ImageName" class="img-thumbnail img-responsive" />
                                         </td>
                                         <td class="text-center">@course.EposodeCount</td>
                                         <td class="text-center col-xs-4 col-sm-4 col-md-2">
                                             <a href="/Admin/Course/Edit/@course.CourseId" class="btn-xs btn-warning">ویرایش</a>
                                             <p></p>
-                                            <a href="/Admin/Course/Episode/@course.CourseId" class="btn-xs btn-primary">فصل های دوره</a>
+                                            <a href="/Admin/CourseEpisode/@course.CourseId" class="btn-xs btn-primary">فصل های دوره</a>
                                             <p></p>
-                                            <a href="/Admin/Course/Comments/@course.CourseId" class="btn-xs btn-info">نظرات کاربران</a>
+                                            <a href="/Admin/CourseComment/@course.CourseId" class="btn-xs btn-info">نظرات کاربران</a>
                                             <p></p>
                                             <a href="/Admin/Course/Delete/@course.CourseId" class="btn-xs btn-danger">حذف دوره</a>
                                         </td>

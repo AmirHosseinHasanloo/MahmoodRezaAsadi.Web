@@ -51,6 +51,31 @@ namespace Core.Services.Interfaces
         void UpdateCourse(Course course, IFormFile courseImage, IFormFile courseDemo);
         #endregion
 
+
+
+        #region Course Episode
+
+        #region Create & Edit & delete
+        void AddEpisode(IFormFile video, CourseEpisode episode);
+        void UpdateEpisode(IFormFile video, CourseEpisode episode);
+        void DeleteEpisodeById(int episodeId);
+        #endregion
+
+
+        #region Get
+        CourseEpisode GetEpisodeByEpisodeId(int episodeId);
+        DeleteEpisodeViewModel GetCourseEpisodeForDelete(int episodeId);
+        Tuple<List<CourseEpisode>, int> GetEpisodesByCourseId(int courseId, int pageId = 1, string filter = "");
+        #endregion
+
+        #region security
+        bool IsEpisodeExists(string episodeName);
+        #endregion
+        #endregion
+
+
+
+
         #endregion
     }
 }

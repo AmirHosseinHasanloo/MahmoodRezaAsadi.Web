@@ -22,13 +22,14 @@ namespace DataLayer.Context
 
             // disable cascade delete =>
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()
-     .SelectMany(t => t.GetForeignKeys())
-     .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+               .SelectMany(t => t.GetForeignKeys())
+               .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
 
             foreach (var fk in cascadeFKs)
             {
                 fk.DeleteBehavior = DeleteBehavior.Restrict;
             }
+            //end
 
             base.OnModelCreating(modelBuilder);
         }
@@ -44,7 +45,7 @@ namespace DataLayer.Context
         public DbSet<CourseGroup> CourseGroups { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseStatus> CourseStatuses { get; set; }
-
+        public DbSet<CourseEpisode>? CourseEpisodes { get; set; }
         #endregion
 
     }
