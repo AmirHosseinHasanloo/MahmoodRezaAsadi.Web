@@ -10,14 +10,14 @@
                 @foreach (var Group in Model.Where(g => g.ParentId == null))
                 {
                     <li>
-                        <a href=""> @Group.GroupTitle </a>
+                        <a href="/Course/Filter?selectedGroups=@Group.GroupId"> @Group.GroupTitle </a>
 
                         @if (Model.Any(g => g.ParentId == Group.GroupId))
                         {
                             <ul>
                                 @foreach (var SubGroup in Model.Where(g => g.ParentId == Group.GroupId))
                                 {
-                                    <li><a href=""> @SubGroup.GroupTitle </a></li>
+                                    <li><a href="/Course/Filter?selectedGroups=@SubGroup.GroupId"> @SubGroup.GroupTitle </a></li>
                                 }
                             </ul>
                         }

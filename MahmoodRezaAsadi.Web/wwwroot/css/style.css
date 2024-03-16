@@ -11,13 +11,13 @@ html{
   overflow-x: hidden;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'BYekan';
-    font-size: 14px;
-    word-spacing: -1px;
-    background-color: #fff;
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'BYekan';
+  font-size: 14px;
+  word-spacing: -1px;
+  background-color: #fff;
 }
 
 
@@ -621,6 +621,7 @@ main#home-page{
     width: 100%;
     margin-bottom: 20px;
     position: relative;
+    border-radius: 15px;
     box-shadow: 0 0 5px #ccc;
     -moz-box-shadow: 0 0 5px #ccc;
     -webkit-box-shadow: 0 0 5px #ccc;
@@ -906,6 +907,7 @@ main#home-page{
     background-color: #fff;
     box-shadow: 0 0 6px #ccc;
     padding: 15px 20px 20px;
+    border-radius: 15px;
     margin-bottom: 25px;
     position: relative;
 }
@@ -937,6 +939,7 @@ main#home-page{
 .term-categories > .top-bar form{
     position: relative;
     width: 100%;
+    border-radius: 15px;
     height: 40px;
     border: 1px solid #E8E8E8;
     overflow: hidden;
@@ -946,6 +949,7 @@ main#home-page{
     width: 100%;
     height: 40px;
     border:0;
+    border-radius: 15px;
     padding: 0 18px 0 50px;
     font-size: 14px;
     line-height: 40px
@@ -955,6 +959,7 @@ main#home-page{
     width: 40px;
     height:40px;
     position: absolute;
+    border-radius: 15px;
     left: 0;
     top: 0;
     border:0;
@@ -965,6 +970,7 @@ main#home-page{
 }
 .term-categories > .top-bar .select-ddl{
     width: 100%;
+    border-radius: 15px;
     background-color: #fff;
     border: 1px solid #E8E8E8;
     position: relative;
@@ -972,6 +978,7 @@ main#home-page{
 .term-categories > .top-bar .select-ddl select{
     width: 100%;
     padding: 0 15px 0 0;
+    border-radius: 15px;
     font-size: 14px;
     height: 38px;
     line-height: 38px;
@@ -980,6 +987,8 @@ main#home-page{
 
 .term-categories .switch-field{
     width: 100%;
+    border-radius: 15px;
+    border-radius: 15px;
     overflow: hidden;
     border: 1px solid #E8E8E8;
 }
@@ -996,6 +1005,7 @@ main#home-page{
     float: right;
     color: #333;
     display: inline-block;
+    border-radius: 15px;
     font-size: 13px;
     font-weight: normal;
     padding: 5px 10px;
@@ -1016,6 +1026,7 @@ main#home-page{
 }
 .term-categories .aside-section header h3{
     font-size: 17px;
+    border-radius: 15px;
     line-height: 22px;
     padding: 15px;
     border-bottom: 1px solid #ebebeb;
