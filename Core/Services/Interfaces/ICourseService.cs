@@ -2,6 +2,7 @@
 using DataLayer.Entities.Course;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,7 @@ namespace Core.Services.Interfaces
         void UpdateCourse(Course course, IFormFile courseImage, IFormFile courseDemo);
         #endregion
 
+        #endregion
 
 
         #region Course Episode
@@ -74,7 +76,13 @@ namespace Core.Services.Interfaces
         #endregion
 
 
+        #region Course Comment
+        void AddComment(CourseComment comment, string userName);
+        void AcceptComment(int commentId);
+        void RejectComment(int commentId);
+        Tuple<List<CourseComment>, int> GetCommentForCourseByCourseId(int courseId, int pageId=1);
 
+        List<CourseComment> GetAllCommentsByCourseId(int courseId);
 
         #endregion
     }

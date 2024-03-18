@@ -76,5 +76,7 @@ namespace DataLayer.Entities.Course
         public CourseStatus? CourseStatus { get; set; }
 
         public ICollection<CourseEpisode>? CourseEpisodes { get; set; }
+
+        public ICollection<CourseComment>? CourseComments{ get; set; }
     }
 }

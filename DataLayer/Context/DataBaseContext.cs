@@ -19,7 +19,6 @@ namespace DataLayer.Context
             // Only Show UnBanned Users
             modelBuilder.Entity<User>().HasQueryFilter(u => !u.IsBanned);
 
-
             // disable cascade delete =>
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()
                .SelectMany(t => t.GetForeignKeys())
@@ -45,7 +44,8 @@ namespace DataLayer.Context
         public DbSet<CourseGroup> CourseGroups { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseStatus> CourseStatuses { get; set; }
-        public DbSet<CourseEpisode>? CourseEpisodes { get; set; }
+        public DbSet<CourseEpisode> CourseEpisodes { get; set; }
+        public DbSet<CourseComment> CourseComment { get; set; }
         #endregion
 
     }

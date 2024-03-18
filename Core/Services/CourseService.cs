@@ -28,6 +28,24 @@ namespace Core.Services
             _context = context;
         }
 
+        public void AcceptComment(int commentId)
+        {
+            var comment = _context.CourseComment.Find(commentId);
+
+            comment.IsAccepted = true;
+            _context.SaveChanges();
+        }
+
+        public void AddComment(CourseComment comment, string userName)
+        {
+            comment.CreateDate = DateTime.Now;
+            comment.UserId = _context.Users.Single(u => u.UserName == userName).UserId;
+            comment.IsAccepted = false;
+
+            _context.Add(comment);
+            _context.SaveChanges();
+        }
+
         public void AddCourse(Course course, IFormFile courseImage, IFormFile courseDemo)
         {
             if (courseImage != null && courseImage.IsImage())
@@ -133,9 +151,14 @@ namespace Core.Services
             return NameGenerator.GenerateName() + Path.GetExtension(file.FileName);
         }
 
+        public List<CourseComment> GetAllCommentsByCourseId(int courseId)
+        {
+            return _context.CourseComment.Include(c => c.User).Where(c => c.CourseId == courseId && !c.IsAccepted).ToList();
+        }
+
         public CourseListForAdminPanelViewModel GetAllCourseForAdminPanel(int pageId = 1, string filterName = "")
         {
-            IQueryable<Course> result = _context.Courses.Include(c => c.CourseEpisodes);
+            IQueryable<Course> result = _context.Courses.Include(c => c.CourseEpisodes).Include(c => c.CourseComments);
 
             CourseListForAdminPanelViewModel viewModel = new CourseListForAdminPanelViewModel();
 
@@ -175,6 +198,22 @@ namespace Core.Services
             }).ToList();
         }
 
+        public Tuple<List<CourseComment>, int> GetCommentForCourseByCourseId(int courseId, int pageId = 1)
+        {
+            int take = 30;
+            int skip = (pageId - 1) * take;
+
+            int pageCount = _context.CourseComment.Where(c => c.CourseId == courseId && c.IsAccepted).Count() / take;
+
+            if (pageCount % 2 != 0)
+            {
+                pageCount += 1;
+            }
+
+            return Tuple.Create(_context.CourseComment.Include(c => c.User).Where(c => c.CourseId == courseId && c.IsAccepted)
+                .Skip(skip).Take(take).OrderByDescending(c => c.CreateDate).ToList(), pageCount);
+        }
+
         public Course GetCourseById(int id)
         {
             return _context.Courses.Find(id);
@@ -183,7 +222,8 @@ namespace Core.Services
         public Course GetCourseByIdForClientSide(int id)
         {
             return _context.Courses.Include(c => c.User).Include(c => c.CourseStatus)
-                .Include(c => c.CourseGroup).
+                .Include(c => c.CourseGroup).Include(c => c.CourseEpisodes)
+                .Include(c => c.CourseComments).
                 Single(c => c.CourseId == id);
         }
 
@@ -265,6 +305,14 @@ namespace Core.Services
         public bool IsEpisodeExists(string episodeName)
         {
             return _context.CourseEpisodes.Any(c => c.episodeFileName == episodeName);
+        }
+
+        public void RejectComment(int commentId)
+        {
+            var comment = _context.CourseComment.Find(commentId);
+
+            _context.CourseComment.Remove(comment);
+            _context.SaveChanges();
         }
 
         public string SaveFile(IFormFile formFile, string path, string subPath, string? episodeName = "")
