@@ -3,8 +3,10 @@ using Core.DTOs;
 using Core.Security;
 using Core.Services.Interfaces;
 using DataLayer.Context;
+using DataLayer.Entities.Order;
 using DataLayer.Entities.User;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -175,8 +177,21 @@ namespace Core.Services
             }
         }
 
+        public Order GetUserOrderByNameForUserPanel(string userName, int orderId)
+        {
+            int userId = _context.Users.Single(u => u.UserName == userName).UserId;
+
+            return _context.Orders.Include(o => o.OrderDetails)
+                .ThenInclude(o => o.Course)
+                .FirstOrDefault(o => o.UserId == userId && o.OrderId == orderId);
+        }
+
+        public List<UserCourses> UserBuyedCourses(string userName)
+        {
+            int userId = _context.Users.Single(u => u.UserName == userName).UserId;
 
 
-
+            return _context.UserCourses.Include(c=>c.Course).Where(c => c.UserId == userId).ToList();
+        }
     }
 }

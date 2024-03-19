@@ -1,4 +1,5 @@
 ﻿using DataLayer.Entities.Course;
+using DataLayer.Entities.Order;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -59,9 +60,11 @@ namespace DataLayer.Entities.User
 
 
         #region Relations
-        public ICollection<Course.Course> Courses { get; set; }
+        public ICollection<Course.Course>? Courses { get; set; }
         public ICollection<CourseComment>? CourseComments { get; set; }
-        public Role Role { get; set; }
+        public ICollection<Order.Order>? Orders { get; set; }
+        public ICollection<UserCourses>? UserCourses { get; set; }
+        public Role? Role { get; set; }
         #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Core.DTOs;
+using DataLayer.Entities.Order;
 using DataLayer.Entities.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
@@ -37,6 +38,12 @@ namespace Core.Services.Interfaces
         #endregion
 
 
+        #region UserOrder
 
+        Order GetUserOrderByNameForUserPanel(string userName,int orderId);
+
+        List<UserCourses> UserBuyedCourses(string userName);
+
+        #endregion
     }
 }

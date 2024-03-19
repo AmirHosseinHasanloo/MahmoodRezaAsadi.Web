@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataLayer.Entities.Order;
+using DataLayer.Entities.User;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -78,5 +80,7 @@ namespace DataLayer.Entities.Course
         public ICollection<CourseEpisode>? CourseEpisodes { get; set; }
 
         public ICollection<CourseComment>? CourseComments{ get; set; }
+        public ICollection<OrderDetail>? OrderDetails{ get; set; }
+        public ICollection<UserCourses>? UserCourses { get; set; }
     }
 }

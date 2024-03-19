@@ -4,6 +4,7 @@ using DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240318121525_Mig_AddUserCourse")]
+    partial class MigAddUserCourse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +91,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Course.CourseComment", b =>
@@ -125,7 +128,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CourseComment", (string)null);
+                    b.ToTable("CourseComment");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Course.CourseEpisode", b =>
@@ -157,7 +160,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("CourseEpisodes", (string)null);
+                    b.ToTable("CourseEpisodes");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Course.CourseGroup", b =>
@@ -180,7 +183,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("CourseGroups", (string)null);
+                    b.ToTable("CourseGroups");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Course.CourseStatus", b =>
@@ -198,7 +201,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("StatusId");
 
-                    b.ToTable("CourseStatuses", (string)null);
+                    b.ToTable("CourseStatuses");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Order.Order", b =>
@@ -226,7 +229,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Order.OrderDetail", b =>
@@ -253,7 +256,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderDetails", (string)null);
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.User.Role", b =>
@@ -276,7 +279,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.User.User", b =>
@@ -328,7 +331,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.User.UserCourses", b =>
@@ -351,7 +354,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserCourses", (string)null);
+                    b.ToTable("UserCourses");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Course.Course", b =>

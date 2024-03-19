@@ -1,4 +1,5 @@
 ﻿using DataLayer.Entities.Course;
+using DataLayer.Entities.Order;
 using DataLayer.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -38,6 +39,7 @@ namespace DataLayer.Context
         #region User
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<UserCourses> UserCourses { get; set; }
         #endregion
 
         #region Course
@@ -46,6 +48,11 @@ namespace DataLayer.Context
         public DbSet<CourseStatus> CourseStatuses { get; set; }
         public DbSet<CourseEpisode> CourseEpisodes { get; set; }
         public DbSet<CourseComment> CourseComment { get; set; }
+        #endregion
+
+        #region Order
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
         #endregion
 
     }

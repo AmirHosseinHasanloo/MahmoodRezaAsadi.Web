@@ -4,10 +4,12 @@
     ViewData["Title"] = Model.CourseTitle;
 }
 
+<input type="hidden" id="CourseId" value="@Model.CourseId" />
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"> صفحه اصلی </a></li>
+            <li class="breadcrumb-item"><a href="/"> صفحه اصلی </a></li>
             <li class="breadcrumb-item active"><a href="/Course/Filter?selectedGroups=@Model.CourseGroup.GroupId"> @Model.CourseGroup.GroupTitle </a></li>
             <li class="breadcrumb-item active" aria-current="page"> @Model.CourseTitle </li>
         </ul>
@@ -118,10 +120,9 @@
 
                     @if (Model.CoursePrice != 0)
                     {
-                        <a href=""> شرکت در دوره : @Model.CoursePrice.ToString("#,0") تومان </a>
+                        <a href="/BuyCourse/@Model.CourseId"> شرکت در دوره : @Model.CoursePrice.ToString("#,0") تومان </a>
                     }
                 </div>
-
 
 
                 <article class="term-info">
@@ -130,16 +131,16 @@
                         <li>وضعیت دوره: @Model.CourseStatus.StatusTitle</li>
                         @if (Model.CoursePrice != 0)
                         {
-                                                            <li>قیمت : @Model.CoursePrice.ToString("#,0") تومان</li>
+                    <li>قیمت : @Model.CoursePrice.ToString("#,0") تومان</li>
                         }
                         else
                         {
-                                                                <li>قیمت : رایگان</li>
+                    <li>قیمت : رایگان</li>
                         }
                         <li>تاریخ ثبت این دوره : @Model.CreateDate.ToShamsi()</li>
                         @if (Model.UpdateDate != null)
                         {
-                                                                        <li>آخرین بروزرسانی دوره :@Model.UpdateDate?.ToShamsi()</li>
+                    <li>آخرین بروزرسانی دوره :@Model.UpdateDate?.ToShamsi()</li>
                         }
                     </ul>
                 </article>
@@ -165,40 +166,13 @@
 </div>
 
 @section Scripts {
-    <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
-    <script src="/js/inputckmaker.js"></script>
-    <script src="/js/jquery.unobtrusive-ajax.js"></script>
-    <script src="/js/jquery.unobtrusive-ajax.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <cache expires-after="TimeSpan.FromDays(365)">
-        <script>
-            $(function () {
-                $("#listComment").load("/Course/ShowComment/" + @Model.CourseId);
-            });
+        <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-            CKEDITOR.replace("comment_Comment", {
-                customConfig: '/js/Config.js'
-            });
+        <script src="/js/jquery.unobtrusive-ajax.js"></script>
+        <script src="/js/jquery.unobtrusive-ajax.min.js"></script>
 
-            function Success() {
-                var editor = CKEDITOR.instances['comment_Comment'];
-                editor.setData('');
-                Swal.fire({
-                    title: "موفقیت آمیز!",
-                    text: "کاربر گرامی نظر شما پس از تایید کارشناسان نمایش داده خواهد شد",
-                    icon: "success"
-                });
-            }
-
-            function ReplyComment(id) {
-                $("#ParentId").val(id);
-                $("html, body").animate({ scrollTop: $("#myDiv").offset().top }, 1000);
-            }
-
-            function ShowPageComments(pageId) {
-                $("#listComment").load("/Course/ShowComment/" + @Model.CourseId + "?pageId=" + pageId);
-            }
-        </script>
+        <script src="/js/CourseComment.js"></script>
     </cache>
-    <script src="/js/Course.js"></script>
 }
