@@ -22,6 +22,8 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
 #endregion
 
 
+
+
 #region IOC 
 
 builder.Services.AddTransient<IUserService, UserService>();
@@ -49,6 +51,34 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+
+#region Check User Can Download Course Or not
+
+app.Use(async (context, next) =>
+{
+    var callingUrl = context.Request.Headers["referer"].ToString();
+
+    if (context.Request.Path.Value.ToString().ToLower().StartsWith("/episodes") ||
+     context.Request.Path.Value.ToString().ToLower().StartsWith("/freeepisodes") ||
+     context.Request.Path.Value.ToString().ToLower().StartsWith("/courseroot"))
+    {
+
+        if (callingUrl != "" && (callingUrl.StartsWith("https://localhost:7216") || callingUrl.StartsWith("http://localhost:7216")))
+        {
+            await next.Invoke();
+        }
+        else
+        {
+            context.Response.Redirect("/Login");
+        }
+    }
+    else
+    {
+        await next.Invoke();
+    }
+});
+#endregion
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -56,6 +86,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

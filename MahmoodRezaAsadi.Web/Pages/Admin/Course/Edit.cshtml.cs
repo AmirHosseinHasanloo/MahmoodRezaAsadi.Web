@@ -1,12 +1,15 @@
+using Core.Security;
 using Core.Services;
 using Core.Services.Interfaces;
 using DataLayer.Entities.Course;
+using MahmoodRezaAsadi.Web.RoleChecker;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MahmoodRezaAsadi.Web.Pages.Admin.Course
 {
+    [RoleCheckAttribute(1)]
     public class EditModel : PageModel
     {
         private ICourseService _courseService;

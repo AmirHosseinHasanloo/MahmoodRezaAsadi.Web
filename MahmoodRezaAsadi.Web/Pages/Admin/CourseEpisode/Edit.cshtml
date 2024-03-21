@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-md-8 col-sm-12 col-lg-8 col-xs-12">
             <div class="panel-heading">
-                ( افزودن فصل )
+                ( ویرایش بخش )
             </div>
 
             <div class="panel-body">
@@ -39,13 +39,21 @@
                         </lable>
                     </div>
                 </div>
+
+                <div class="panel-body">
+                    <label>نوع بخش</label>
+                    <div class="form-group">
+                        <select class="form-control" asp-for="courseEpisode.TypeId" asp-items="@(ViewData["episodeTypes"] as SelectList)"></select>
+                        <span asp-validation-for="courseEpisode.TypeId" class="text-danger"></span>
+                    </div>
+                </div>
                 <button type="submit" class="btn-outline btn-warning btn btn-block">ویرایش بخش</button>
             </div>
         </div>
         <div class="col-md-4 col-sm-12 col-lg-4 col-xs-12">
             <div class="panel panel-info">
                 <div class="panel-heading text-center">
-                    ( ویدیو بخش)
+                    ( فایل بخش)
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Formatters.Internal;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using SharpCompress.Archives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -224,6 +225,7 @@ namespace Core.Services
             return _context.Courses.Include(c => c.User).Include(c => c.CourseStatus)
                 .Include(c => c.CourseGroup).Include(c => c.CourseEpisodes)
                 .Include(c => c.CourseComments).
+                Include(c=>c.UserCourses).
                 Single(c => c.CourseId == id);
         }
 
@@ -290,6 +292,15 @@ namespace Core.Services
 
 
             return Tuple.Create(result.Skip(skip).Take(take).ToList(), pageCount);
+        }
+
+        public List<SelectListItem> GetEpisodeTipes()
+        {
+            return _context.EpisodeTypes.Select(c => new SelectListItem()
+            {
+                Text = c.TypeTitle,
+                Value = c.TypeId.ToString(),
+            }).ToList();
         }
 
         public List<SelectListItem> GetSubGroupsForAdminPanel(int groupId)
@@ -467,6 +478,36 @@ namespace Core.Services
                 }).Skip(skip).Take(take).ToList();
 
             return Tuple.Create(query, pageCount);
+        }
+
+        public void UnZipFile(string rarFilePath, string targetPass, int episodeId, string format)
+        {
+            var episode = _context.CourseEpisodes.Single(e => e.EpisodeId == episodeId);
+
+            using (var archive = ArchiveFactory.Open(rarFilePath))
+            {
+                var Entries = archive.Entries.OrderBy(e => e.Key.Length);
+
+                foreach (var en in Entries)
+                {
+                    if (Path.GetExtension(en.Key) == ".mp4")
+                    {
+                        using (var fileStream = System.IO.File.Create(Path.Combine(targetPass,
+                            episode.episodeFileName.Replace(".rar", ".mp4"))))
+                        {
+                            en.WriteTo(fileStream);
+                        }
+                    }
+                    else
+                    {
+                        using (var fileStream = System.IO.File.Create(Path.Combine(targetPass,
+                            episode.episodeFileName.Replace(".rar", ".mp3"))))
+                        {
+                            en.WriteTo(fileStream);
+                        }
+                    }
+                }
+            }
         }
 
         public void UpdateCourse(Course course, IFormFile courseImage, IFormFile courseDemo)

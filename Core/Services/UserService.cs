@@ -191,7 +191,14 @@ namespace Core.Services
             int userId = _context.Users.Single(u => u.UserName == userName).UserId;
 
 
-            return _context.UserCourses.Include(c=>c.Course).Where(c => c.UserId == userId).ToList();
+            return _context.UserCourses.Include(c => c.Course).Where(c => c.UserId == userId).ToList();
+        }
+
+        public bool IsUserBuyedCourse(int courseId, string userName)
+        {
+            int userId = _context.Users.Single(u => u.UserName == userName).UserId;
+
+            return _context.UserCourses.Any(d => d.UserId == userId && d.CourseId == courseId);
         }
     }
 }

@@ -1,7 +1,16 @@
 ﻿@using Core.Convertors
+@inject Core.Services.Interfaces.IUserService _userService
+@using DataLayer.Entities.Course
 @model DataLayer.Entities.Course.Course
 @{
     ViewData["Title"] = Model.CourseTitle;
+    bool userIsBuyThisCourse = false;
+
+    if (User.Identity.IsAuthenticated)
+    {
+        userIsBuyThisCourse = _userService.IsUserBuyedCourse(Model.CourseId, User.Identity.Name);
+    }
+
 }
 
 <input type="hidden" id="CourseId" value="@Model.CourseId" />
@@ -26,27 +35,70 @@
                     <img src="/CourseRoot/Images/@Model.CourseImageName">
 
                     @Html.Raw(Model.CourseDescription)
-
-
                     <h2> معرفی دوره : </h2>
                     <p></p>
-                    <video class="video_Box" controls>
+                    <video class="video_Box" controlsList="nodownload" controls poster="/CourseRoot/Images/@Model.CourseImageName">
                         <source src="/CourseRoot/CourseDemos/@Model.DemoFileName" />
                     </video>
 
 
+                    @if (!userIsBuyThisCourse && Model.CoursePrice > 0)
+                    {
+                        <div class="alert alert-info text-center">
+                            <p>
+                                کاربر گرامی پس از ثبت نام در این دوره به محتوای دوره دسترسی خواهید داشت.
+                            </p>
+                        </div>
+                    }
+
+
+                    <div id="episode">
+                    </div>
+
+
                     <h2> سرفصل های این دوره : </h2>
                     <ul>
-                        <li> <h3> معرفی این دوره </h3> <i> رایگان </i> <span>00:15:12</span></li>
-                        <li> <h3> چرا شی گرایی یاد بگیریم ؟ </h3> <i> نقدی </i>  <span>01:15:12</span></li>
-                        <li> <h3> پروژه ایجاد یک وب سایت - طراحی دیتابیس </h3> <i> نقدی </i>  <span>02:05:12</span></li>
-                        <li> <h3> پروژه ایجاد یک وب سایت - ایجاد پنل مدیریت </h3> <i> نقدی </i>  <span>00:10:12</span></li>
-                        <li> <h3> چرا شی گرایی یاد بگیریم ؟ </h3> <i> نقدی </i>  <span>01:15:12</span></li>
-                        <li> <h3> پروژه ایجاد یک وب سایت - طراحی دیتابیس </h3> <i> نقدی </i>  <span>02:05:12</span></li>
-                        <li> <h3> پروژه ایجاد یک وب سایت - ایجاد پنل مدیریت </h3> <i> نقدی </i>  <span>00:10:12</span></li>
-                        <li> <h3> چرا شی گرایی یاد بگیریم ؟ </h3> <i> نقدی </i>  <span>01:15:12</span></li>
-                        <li> <h3> پروژه ایجاد یک وب سایت - طراحی دیتابیس </h3> <i> نقدی </i>  <span>02:05:12</span></li>
-                        <li> <h3> پروژه ایجاد یک وب سایت - ایجاد پنل مدیریت </h3> <i> نقدی </i>  <span>00:10:12</span></li>
+                        @foreach (var item in Model.CourseEpisodes)
+                        {
+                            <li>
+
+                                @if (item.IsFree || userIsBuyThisCourse)
+                                {
+                                    <h3>
+                                        <a href="/DownloadFile/@item.EpisodeId" class="text-muted">
+                                            @item.EpisodeTitle
+                                        </a>
+                                    </h3>
+                                }
+                                else
+                                {
+                                    <h3 class="text-muted">
+                                        @item.EpisodeTitle
+                                    </h3>
+                                }
+                               
+                                @if (item.IsFree)
+                                {
+                                    <i>
+                                        قابل دسترسی برای همه
+                                    </i>
+                                }
+                                else
+                                {
+                                    <i>
+                                        قابل دسترسی برای دانشجویان دوره
+                                    </i>
+                                }
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    if (item.IsFree || userIsBuyThisCourse)
+                                    {
+                                        <a onclick="GetEpisode(@Model.CourseId,@item.EpisodeId)" class="badge btn btn-xs btn-primary">تماشا</a>
+                                    }
+                                }
+                                <span>@item.EpisodeTime</span>
+                            </li>
+                        }
                     </ul>
                 </section>
 
@@ -114,13 +166,16 @@
                         </li>
                         <li>
                             <span> تعداد دانشجوها </span>
-                            <i> 52 نفر </i>
+                            <i> @(Model.UserCourses.Count() == null ? "0" : Model.UserCourses.Count()) نفر </i>
                         </li>
                     </ul>
 
-                    @if (Model.CoursePrice != 0)
+                    @if (!userIsBuyThisCourse && Model.CoursePrice > 0)
                     {
-                        <a href="/BuyCourse/@Model.CourseId"> شرکت در دوره : @Model.CoursePrice.ToString("#,0") تومان </a>
+                        @if (Model.CoursePrice != 0)
+                        {
+                            <a href="/BuyCourse/@Model.CourseId"> شرکت در دوره : @Model.CoursePrice.ToString("#,0") تومان </a>
+                        }
                     }
                 </div>
 
@@ -131,27 +186,19 @@
                         <li>وضعیت دوره: @Model.CourseStatus.StatusTitle</li>
                         @if (Model.CoursePrice != 0)
                         {
-                    <li>قیمت : @Model.CoursePrice.ToString("#,0") تومان</li>
+                                                                                                                                                <li>قیمت : @Model.CoursePrice.ToString("#,0") تومان</li>
                         }
                         else
                         {
-                    <li>قیمت : رایگان</li>
+                                                                                                                                                <li>قیمت : رایگان</li>
                         }
                         <li>تاریخ ثبت این دوره : @Model.CreateDate.ToShamsi()</li>
                         @if (Model.UpdateDate != null)
                         {
-                    <li>آخرین بروزرسانی دوره :@Model.UpdateDate?.ToShamsi()</li>
+                                                                                                                                                <li>آخرین بروزرسانی دوره :@Model.UpdateDate?.ToShamsi()</li>
                         }
                     </ul>
                 </article>
-
-                <div class="share-layer">
-                    <span> به اشتراک گذاری </span>
-                    <a href=""><i class="zmdi zmdi-facebook"></i></a>
-                    <a href=""><i class="zmdi zmdi-google-old"></i></a>
-                    <a href=""><i class="zmdi zmdi-twitter"></i></a>
-                    <a href=""><i class="zmdi zmdi-linkedin"></i></a>
-                </div>
 
                 <div class="tags-layer">
                     @foreach (var item in Model.Tags.Split("،"))
@@ -166,7 +213,9 @@
 </div>
 
 @section Scripts {
+
     <cache expires-after="TimeSpan.FromDays(365)">
+        <script src="/js//ShowEpisode.js"></script>
         <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

@@ -29,6 +29,7 @@ namespace Core.Services.Interfaces
         bool VerifyPassword(string savedPasword, string password);
         bool IsExistEmail(string email);
         bool ActiveAccount(string activeCode);
+        bool IsUserBuyedCourse(int courseId, string userName);
         #endregion
 
         #region CRUD
@@ -40,7 +41,7 @@ namespace Core.Services.Interfaces
 
         #region UserOrder
 
-        Order GetUserOrderByNameForUserPanel(string userName,int orderId);
+        Order GetUserOrderByNameForUserPanel(string userName, int orderId);
 
         List<UserCourses> UserBuyedCourses(string userName);
 

@@ -65,8 +65,10 @@ namespace Core.Services.Interfaces
 
 
         #region Get
+
         CourseEpisode GetEpisodeByEpisodeId(int episodeId);
         DeleteEpisodeViewModel GetCourseEpisodeForDelete(int episodeId);
+        List<SelectListItem> GetEpisodeTipes();
         Tuple<List<CourseEpisode>, int> GetEpisodesByCourseId(int courseId, int pageId = 1, string filter = "");
         #endregion
 
@@ -80,10 +82,15 @@ namespace Core.Services.Interfaces
         void AddComment(CourseComment comment, string userName);
         void AcceptComment(int commentId);
         void RejectComment(int commentId);
-        Tuple<List<CourseComment>, int> GetCommentForCourseByCourseId(int courseId, int pageId=1);
+        Tuple<List<CourseComment>, int> GetCommentForCourseByCourseId(int courseId, int pageId = 1);
 
         List<CourseComment> GetAllCommentsByCourseId(int courseId);
 
+        #endregion
+
+        #region Archivement
+
+        void UnZipFile(string rarFilePath,string targetPass, int episodeId,string format);
         #endregion
     }
 }

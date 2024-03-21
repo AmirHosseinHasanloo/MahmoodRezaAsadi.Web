@@ -12,6 +12,7 @@ namespace DataLayer.Entities.Course
         [Key]
         public int EpisodeId { get; set; }
         public int? CourseId { get; set; }
+        public int? TypeId { get; set; }
 
         [Display(Name = "عنوان فصل")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -31,5 +32,6 @@ namespace DataLayer.Entities.Course
 
         // navigation property
         public Course? Course { get; set; }
+        public EpisodeType? EpisodeType { get; set; }
     }
 }

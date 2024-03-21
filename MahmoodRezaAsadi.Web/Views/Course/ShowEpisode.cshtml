@@ -1,0 +1,16 @@
+﻿@model DataLayer.Entities.Course.CourseEpisode
+
+<h2 class="text-info">@Model.EpisodeTitle :</h2>
+
+@if (Model.TypeId == 1)
+{
+    <video controls controlsList="nodownload" style="width:100%;border-radius:10px;" poster="/CourseImages/Images/@ViewBag.ImageName">
+        <source src="@ViewBag.EpisodeFilePath" />
+    </video>
+}
+@if (Model.TypeId == 2)
+{
+    <audio controls controlsList="nodownload">
+        <source src="@ViewBag.EpisodeFilePath" type="audio/mpeg">
+    </audio>
+}

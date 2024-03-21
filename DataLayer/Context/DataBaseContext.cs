@@ -47,6 +47,7 @@ namespace DataLayer.Context
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseStatus> CourseStatuses { get; set; }
         public DbSet<CourseEpisode> CourseEpisodes { get; set; }
+        public DbSet<EpisodeType> EpisodeTypes { get; set; }
         public DbSet<CourseComment> CourseComment { get; set; }
         #endregion
 

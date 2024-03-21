@@ -1,5 +1,7 @@
+using Core.Security;
 using Core.Services.Interfaces;
 using DataLayer.Entities.Course;
+using MahmoodRezaAsadi.Web.RoleChecker;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace MahmoodRezaAsadi.Web.Pages.Admin.Course
 {
     [RequestSizeLimit(524288000)]
+    [RoleCheckAttribute(1)]
     public class CreateModel : PageModel
     {
         private ICourseService _courseService;
