@@ -38,6 +38,7 @@
     <Folder Include="wwwroot\CourseRoot\ThumbImages\" />
     <Folder Include="wwwroot\FreeEpisodes\" />
     <Folder Include="wwwroot\Episodes\" />
+    <Folder Include="wwwroot\AboutUs\" />
   </ItemGroup>
 
 </Project>

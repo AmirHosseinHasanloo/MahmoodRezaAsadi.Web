@@ -1,5 +1,4 @@
-﻿<!DOCTYPE html>
-
+﻿@inject Core.Services.Interfaces.IAboutUsService _AboutUsService
 <!DOCTYPE html>
 <html>
 
@@ -68,6 +67,22 @@
                                 </li>
                                 <li>
                                     <a href="/admin/Course/Create"> افزودن دوره </a>
+                                </li>
+                            </ul>
+
+                        </li>
+
+                        <li>
+                            <a href="#"><i class="fa fa-info fa-fw"> </i> درباره من <span class="fa arrow"></span> </a>
+                            <ul class="nav nav-second-level">
+                                @if (_AboutUsService.GetAboutUs() == null)
+                                {
+                                    <li>
+                                        <a href="/admin/AboutUs/Create"> افزودن اطلاعات </a>
+                                    </li>
+                                }
+                                <li>
+                                    <a href="/admin/AboutUs/Edit"> ویرایش اطلاعات </a>
                                 </li>
                             </ul>
 

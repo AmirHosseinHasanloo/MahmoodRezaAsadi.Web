@@ -21,6 +21,9 @@ namespace DataLayer.Entities.Course
         [Display(Name = "زیر گروه")]
         public int? ParentId { get; set; }
 
+        [Display(Name = "آیا حذف شده؟")]
+        public bool IsDelete { get; set; } = false;
+
         // navigation properties
         [ForeignKey("ParentId")]
         public ICollection<CourseGroup>? CourseGroups { get; set; }

@@ -1,0 +1,40 @@
+﻿@page
+@model MahmoodRezaAsadi.Web.Pages.Admin.AboutUs.CreateModel
+@{
+    ViewData["Title"] = "افزودن درباره من";
+}
+
+<div class="clearfix">
+    <br />
+</div>
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel-heading">
+                ( افزودن اطلاعات خودتان )
+            </div>
+
+            <div class="panel-body">
+                <div class="form-group">
+                    <label>شرح دوره</label>
+                    <textarea class="form-control" rows="10" asp-for="AboutUs.Description"></textarea>
+                    <span asp-validation-for="AboutUs.Description" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn-outline btn-primary btn btn-block">ثبت </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="/js/ShowCourseImagePreview.js"></script>
+    <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+    <script>
+        $(function () {
+            CKEDITOR.replace("AboutUs_Description", {
+                customConfig: '/js/config.js'
+            });
+        });
+    </script>
+}

@@ -1,0 +1,45 @@
+﻿@inject Core.Services.Interfaces.IAboutUsService _AboutUs
+@{
+    ViewData["Title"] = "درباره من";
+
+    var aboutUs = _AboutUs.GetAboutUs();
+}
+
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item active" aria-current="page"> درباره من </li>
+        </ul>
+    </nav>
+</div>
+
+
+@if (aboutUs != null)
+{
+    <div class="container">
+        <section class="term-content my-content">
+            <header><h1> درباره من </h1></header>
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12 col-xs-12 pull-left">
+                    <section class="term-description">
+                        @Html.Raw(aboutUs.Description)
+                    </section>
+                </div>
+            </div>
+        </section>
+    </div>
+}
+else
+{
+    <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
+        <div class="alert alert-info text-center">
+            <p>
+                کاربر گرامی سایت درحال راه اندازی میباشد .
+            </p>
+        </div>
+    </div>
+    <p></p>
+}

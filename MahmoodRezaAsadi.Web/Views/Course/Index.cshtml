@@ -13,6 +13,25 @@
 
 }
 
+@section MetaTags {
+    <meta name="googlebot" content=index,follow>
+    <meta name="robots" content=noodp,noydir>
+    <!-- Add this to admin panel ! -->
+    <meta name=description content="شرح صفحه">
+
+    <meta property="og:site_name" value="محمود رضا اسدی">
+    <meta property="og:title" content="@Model.CourseTitle">
+    <meta property="og:url" content="https://MahmoodRezaAsadi.com/ShowCourse/@Model.CourseTitle" />
+    <meta property="og:image" content="/CourseRoot/Images/@Model.CourseImageName">
+    <meta property="og:image:url" content="/CourseRoot/Images/@Model.CourseImageName" />
+    <meta property="og:image:width" content="700">
+
+    <meta property="og:image:type" content="/CourseRoot/Images/@Model.CourseImageName">
+    <meta property="og:description" content="شرح">
+    <meta property="og:price:currency" content="IRR">
+    <meta property="og:locale" content="ir_FA">
+}
+
 <input type="hidden" id="CourseId" value="@Model.CourseId" />
 
 <div class="container">

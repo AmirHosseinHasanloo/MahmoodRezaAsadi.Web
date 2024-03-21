@@ -114,14 +114,19 @@ namespace Core.Services
             }
 
 
-            _context.Entry(course).State = EntityState.Deleted;
+            course.IsDelete = true;
+
+            _context.Update(course);
             _context.SaveChanges();
         }
 
         public void DeleteCourseGroupById(int id)
         {
-            var group = _context.CourseGroups.Find(id);
-            _context.CourseGroups.Remove(group);
+            var group = _context.CourseGroups.Single(g => g.GroupId == id);
+
+            group.IsDelete = true;
+
+            _context.Update(group);
             _context.SaveChanges();
         }
 
@@ -225,7 +230,7 @@ namespace Core.Services
             return _context.Courses.Include(c => c.User).Include(c => c.CourseStatus)
                 .Include(c => c.CourseGroup).Include(c => c.CourseEpisodes)
                 .Include(c => c.CourseComments).
-                Include(c=>c.UserCourses).
+                Include(c => c.UserCourses).
                 Single(c => c.CourseId == id);
         }
 

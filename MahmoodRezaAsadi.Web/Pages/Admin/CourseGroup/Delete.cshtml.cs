@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MahmoodRezaAsadi.Web.Pages.Admin.CourseGroup
 {
-    [RoleCheckAttribute(1)]
     public class DeleteModel : PageModel
     {
         private ICourseService _courseService;

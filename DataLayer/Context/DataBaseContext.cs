@@ -1,4 +1,5 @@
-﻿using DataLayer.Entities.Course;
+﻿using DataLayer.Entities.AboutUs;
+using DataLayer.Entities.Course;
 using DataLayer.Entities.Order;
 using DataLayer.Entities.User;
 using Microsoft.EntityFrameworkCore;
@@ -17,8 +18,17 @@ namespace DataLayer.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
             // Only Show UnBanned Users
             modelBuilder.Entity<User>().HasQueryFilter(u => !u.IsBanned);
+
+
+            // Only Show Un Delete Courses
+            modelBuilder.Entity<Course>().HasQueryFilter(c => !c.IsDelete);
+
+            // Only Show Un Delete CourseGroups
+            modelBuilder.Entity<CourseGroup>().HasQueryFilter(cg => !cg.IsDelete);
 
             // disable cascade delete =>
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()
@@ -31,10 +41,14 @@ namespace DataLayer.Context
             }
             //end
 
+
             base.OnModelCreating(modelBuilder);
         }
 
 
+        #region About
+        public DbSet<AboutUs> AboutUs { get; set; }
+        #endregion
 
         #region User
         public DbSet<User> Users { get; set; }

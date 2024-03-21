@@ -22,11 +22,10 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
 #endregion
 
 
-
-
 #region IOC 
 
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IAboutUsService, AboutUsService>();
 builder.Services.AddTransient<ICourseService, CourseService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IUserAdminService, UserAdminService>();

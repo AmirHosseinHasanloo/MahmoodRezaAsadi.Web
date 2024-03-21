@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title> محمود رضا اسدی | @ViewData["Title"] </title>
-
+    @RenderSection("MetaTags", required: false)
     <partial name="_MetaTags" />
     <partial name="_Styles" />
 
@@ -20,8 +20,8 @@
                     <div class="col-sm-6 col-xs-12">
                         <ul>
                             <li>
-                                <a href=""> درباره من </a>
-                                <a href=""> تماس با من </a>
+                                <a href="/AboutUs"> درباره من </a>
+                                <a href="/ContactUs"> تماس با من </a>
                             </li>
                         </ul>
                     </div>
@@ -86,7 +86,6 @@
                         <section class="list">
                             <header><h4> دسترسی سریع</h4></header>
                             <ul>
-                                <li><a href="/"> خانه</a></li>
                                 <li><a href="/Course/Filter?getType=all"> دوره ها</a></li>
                                 <li><a href="/AboutUs"> درباره من</a></li>
                                 <li><a href="/ContactUs">تماس با من </a></li>
@@ -97,10 +96,9 @@
                         <section class="list">
                             <header><h4> ارتباط با ما</h4></header>
                             <ul>
-                                <li><a href=""> ایمیل : example@gmail.com </a></li>
-                                <li><a href=""> تلفن : 02666666 </a></li>
-                                <li><a href=""> تلفن همراه : 0999999999 </a></li>
-                                <li><a href=""> کانال تلگرام : محمود رضا اسدی </a></li>
+                                <li><a> ایمیل : MahmoudAsadi1970@gmail.com </a></li>
+                                <li><a> تلفن همراه : 09371730908 </a></li>
+                                <li><a href="https://t.me/ostadasadi121"> کانال تلگرام : محمود رضا اسدی </a></li>
                             </ul>
                         </section>
                     </div>
@@ -110,7 +108,7 @@
         <div class="bottom-footer">
             <div class="container">
                 <p class="text-center">
-                   تمامی حقوق مادی، معنوی و محتوای این سایت متعلق به <a href="https://MahmoodRezaAsadi.com"> MahmoodRezaAsadi.com </a> می باشد
+                    تمامی حقوق مادی، معنوی و محتوای این سایت متعلق به <a href="https://MahmoodRezaAsadi.com"> MahmoodRezaAsadi.com </a> می باشد
                 </p>
             </div>
         </div>

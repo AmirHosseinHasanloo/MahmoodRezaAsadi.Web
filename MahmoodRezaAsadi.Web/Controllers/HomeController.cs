@@ -28,5 +28,13 @@ namespace MahmoodRezaAsadi.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        [Route("AboutUs")]
+        public IActionResult AboutUs() => View();
+
+
+        [Route("ContactUs")]
+        public IActionResult ContactUs()=>View();
     }
 }

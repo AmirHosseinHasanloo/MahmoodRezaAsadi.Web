@@ -1,6 +1,19 @@
 ﻿@model Tuple<List<Core.DTOs.CourseCardViewModel>,int>
 
-@foreach (var item in Model.Item1)
+@if (Model.Item1.Any())
 {
-    <partial name="_CourseBox" model="item" />
+    @foreach (var item in Model.Item1)
+    {
+        <partial name="_CourseBox" model="item" />
+    }
+}
+else
+{
+    <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12">
+    <div class="alert alert-info text-center">
+        <p>
+            کاربر گرامی سایت درحال راه اندازی میباشد ،تا انتشار اولین دوره صبور باشید.
+        </p>
+    </div>
+    </div>
 }

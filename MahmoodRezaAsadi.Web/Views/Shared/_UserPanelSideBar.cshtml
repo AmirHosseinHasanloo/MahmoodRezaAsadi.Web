@@ -1,7 +1,6 @@
 ﻿@using Core.Convertors
 @inject Core.Services.Interfaces.IUserService _userServices
 
-
 @{
     Core.DTOs.SideBarViewModel user = _userServices.GetUserSideBarInfo(User.Identity.Name);
 }
@@ -34,5 +33,18 @@
                 </ul>
             </div>
         </section>
+
+        @if (_userServices.IsUserAdmin(user.UserName))
+        {
+            <section>
+                <header><h3> دسترسی به پنل ادمین </h3></header>
+                <div class="inner">
+                    <ul>
+                        <li><a href="/Admin"> پنل ادمین </a></li>
+                    </ul>
+                </div>
+            </section>
+        }
+      
     </aside>
 </div>

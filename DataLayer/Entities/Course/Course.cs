@@ -16,16 +16,13 @@ namespace DataLayer.Entities.Course
         [Key]
         public int CourseId { get; set; }
 
-        [Required]
-        public int GroupId { get; set; }
+        public int? GroupId { get; set; }
 
         public int? SubGroupId { get; set; }
 
-        [Required]
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
-        [Required]
-        public int StatusId { get; set; }
+        public int? StatusId { get; set; }
 
         [Display(Name = "نام دوره")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -62,6 +59,9 @@ namespace DataLayer.Entities.Course
         [MaxLength(200, ErrorMessage = "فیلد {0} نمی تواند بیش از {1} کرکتر باشد")]
         public string MetaDescription { get; set; }
 
+        [Display(Name ="آیا حذف شده؟")]
+        public bool IsDelete { get; set; } = false;
+
 
         // navigation properties
 
@@ -79,8 +79,8 @@ namespace DataLayer.Entities.Course
 
         public ICollection<CourseEpisode>? CourseEpisodes { get; set; }
 
-        public ICollection<CourseComment>? CourseComments{ get; set; }
-        public ICollection<OrderDetail>? OrderDetails{ get; set; }
+        public ICollection<CourseComment>? CourseComments { get; set; }
+        public ICollection<OrderDetail>? OrderDetails { get; set; }
         public ICollection<UserCourses>? UserCourses { get; set; }
     }
 }

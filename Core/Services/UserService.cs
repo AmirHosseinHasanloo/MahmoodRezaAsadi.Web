@@ -200,5 +200,10 @@ namespace Core.Services
 
             return _context.UserCourses.Any(d => d.UserId == userId && d.CourseId == courseId);
         }
+
+        public bool IsUserAdmin(string userName)
+        {
+            return _context.Users.Any(c => c.UserName == userName && c.RoleId == 1);
+        }
     }
 }

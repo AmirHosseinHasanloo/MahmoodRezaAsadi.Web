@@ -30,6 +30,7 @@ namespace Core.Services.Interfaces
         bool IsExistEmail(string email);
         bool ActiveAccount(string activeCode);
         bool IsUserBuyedCourse(int courseId, string userName);
+        bool IsUserAdmin(string userName);
         #endregion
 
         #region CRUD
